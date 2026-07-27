@@ -399,6 +399,10 @@ a { color: inherit; text-decoration: none; }
 /* Top half — dark; content anchored to the bottom with a one-button-height gap below the buttons */
 .hero-top-half { position: relative; height: 66.66vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: calc(0.92rem + 32px); }
 .hero-top-half .container { position: relative; z-index: 1; }
+/* ---- Events hero: background-image-ready surface + dedicated dark overlay ---- */
+.page-hero .hero-bg-image { background: var(--hero-image, url("Textured Black Surface.jpg")) center center / cover no-repeat; opacity: 1; }   /* bg-cover bg-center placeholder; drop in a photo later by setting --hero-image on the .page-hero section */
+.page-hero-overlay { position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(11,12,14,0.35) 0%, rgba(11,12,14,0.85) 100%); pointer-events: none; }   /* dark layer above the image, below the text, to guarantee legibility once a photo is set */
+.page-hero .hero-lede { margin-top: 24px; max-width: 42rem; font-family: var(--f-sans); font-weight: 400; font-size: clamp(1.05rem, 1.5vw, 1.28rem); line-height: 1.65; letter-spacing: 0.005em; color: var(--c-ink-2); }   /* max-w-2xl equivalent, balanced leading, soft off-white */
 /* Bottom half (50vh) — cloned 3-Pillar grid: white, full-width, gold titles, vertical dividers, flush bottom */
 .hero-pillars { height: 33.33vh; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); background: #FFFFFF; border-top: 1px solid rgba(20, 22, 26, 0.16); margin: 0 !important; padding: 0 !important; }
 .hero-pillars--2 { grid-template-columns: repeat(2, 1fr); }   /* Events page: exactly 2 white cards */
@@ -598,21 +602,26 @@ a { color: inherit; text-decoration: none; }
 #rd-commitment .rd-list li { position: relative; padding-left: 26px; margin-bottom: 16px; font-size: clamp(1rem, 1.2vw, 1.1rem); color: var(--c-ink-2); line-height: 1.6; max-width: none; }
 #rd-commitment .rd-list li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 6px; height: 6px; background: #FFFFFF; border-radius: 50%; }   /* white bullet dots */
 /* Academic trust-signal logo block — homepage 'Foundational Research & Rigor' treatment, on the dark surface */
+#rd-commitment { --logo-scale: 1; }   /* logos scale down on smaller laptops (media queries below) */
 #rd-commitment .rd-logos { margin-top: clamp(48px, 7vh, 96px); }
+#rd-commitment .logo-strip { flex-wrap: nowrap; align-items: flex-start; gap: clamp(0.8rem, 1.8vw, 2.5rem); }
+#rd-commitment .logo-strip--left { justify-content: flex-start; gap: clamp(3rem, 7vw, 8rem); }
 #rd-commitment .logo-strip-block { padding-bottom: 0; }   /* trim dead space below the logos */
 #rd-commitment .logo-strip-overline { color: var(--c-gold); }   /* gold overline, exactly as on the homepage */
 /* Academic & Research logos: per-logo sizing copied verbatim from the homepage #pedigree
    block so the strip renders 100% identically on both pages (dark surface, inverted marks). */
 #rd-commitment .logo-strip-item { min-height: 0; }
-#rd-commitment .logo-strip-item img { height: 50px; width: auto; max-width: 215px; object-fit: contain; filter: grayscale(1) brightness(0) invert(0.82); opacity: 0.82; }
-#rd-commitment .logo-strip-item[data-fallback="ENS"] img             { height: 50px; max-width: 215px; }
-#rd-commitment .logo-strip-item[data-fallback="CNRS"] img            { height: 65px; max-width: 280px; }
-#rd-commitment .logo-strip-item[data-fallback="ERC"] img             { height: 75px; max-width: 323px; }
-#rd-commitment .logo-strip-item[data-fallback="Sorbonne"] img        { height: 60px; max-width: 258px; }
-#rd-commitment .logo-strip-item[data-fallback="Polytechnique"] img   { height: 75px; max-width: 323px; }
-#rd-commitment .logo-strip-item[data-fallback="CentraleSupélec"] img { height: 65px; max-width: 280px; }
-#rd-commitment .logo-strip-item[data-fallback="ETH Zürich"] img      { height: 45px; max-width: 194px; }
-#rd-commitment .logo-strip-item[data-fallback="ESILV"] img           { height: 75px; max-width: 323px; }
+#rd-commitment .logo-strip-item img { height: calc(50px * var(--logo-scale)); width: auto; max-width: calc(215px * var(--logo-scale)); object-fit: contain; filter: grayscale(1) brightness(0) invert(0.82); opacity: 0.82; }
+#rd-commitment .logo-strip-item[data-fallback="ENS"] img             { height: calc(50px * var(--logo-scale)); max-width: calc(215px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="CNRS"] img            { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="ERC"] img             { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="Sorbonne"] img        { height: calc(60px * var(--logo-scale)); max-width: calc(258px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="Polytechnique"] img   { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="CentraleSupélec"] img { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="ETH Zürich"] img      { height: calc(45px * var(--logo-scale)); max-width: calc(194px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="ESILV"] img           { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="Inria"] img           { height: calc(46px * var(--logo-scale)); max-width: calc(210px * var(--logo-scale)); }
+#rd-commitment .logo-strip-item[data-fallback="FSMP"] img            { height: calc(60px * var(--logo-scale)); max-width: calc(200px * var(--logo-scale)); }
 #rd-commitment .logo-strip-item:hover img { opacity: 1; }
 #rd-commitment .logo-strip-item.logo-missing::after { color: var(--c-ink-3); }
 
@@ -975,7 +984,8 @@ a { color: inherit; text-decoration: none; }
   background: #2E3047;   /* matches the overall Services SECTION background (gunmetal) */
   display: flex; flex-direction: column; min-height: auto;
   padding-top: clamp(64px, 9vh, 120px);
-  padding-bottom: clamp(48px, 7.5vh, 100px);   /* bottom space reduced ~1/2 (was var(--section-y)) */
+  padding-bottom: 2rem;
+  --logo-scale: 1;   /* logos shrink proportionally on smaller laptops (see media queries) */   /* = the Standard Gap (logo-strip-overline margin-bottom) */
 }
 #pedigree .container { max-width: none; display: flex; flex-direction: column; }   /* full-bleed gutter width */
 /* Section header — title + intro, matching Section 2 typography (50/50 like cs-rows) */
@@ -983,48 +993,56 @@ a { color: inherit; text-decoration: none; }
 .pedigree-head .section-title { color: #14161A; font-size: clamp(2.2rem, 4.6vw, 3.5rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; }   /* dark title on white */
 .pedigree-intro { font-size: clamp(1rem, 1.25vw, 1.12rem); color: #1A1C20; line-height: 1.72; }
 /* Stack the head so the intro sits below the label on the same left axis (was col 2 of a 2-col grid) */
-#pedigree .pedigree-head { grid-template-columns: 1fr; }
+/* Two-column header: gold overline label left, intro paragraph right, tops aligned. */
+#pedigree .pedigree-head { grid-template-columns: 1fr 1fr; align-items: baseline; gap: clamp(2rem, 5vw, 6rem); }
 #pedigree .pedigree-intro {
-  text-align: left;
+  text-align: right;
   padding-right: 0;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 0;
   max-width: none;
-  /* Typography copied from .thesis-lead — colour deliberately NOT copied */
-  font-family: var(--f-sans);
-  font-weight: 400;
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 1.3;
+  font-family: var(--f-serif);         /* match the row titles (.logo-strip-overline) */
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 /* --- Ecosystem dark-mode text mapping --- */
 #pedigree .pedigree-head .section-title { color: var(--c-gold); font-family: var(--f-mono); font-size: 0.72rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.2em; }   /* reverted to the standard ALL-CAPS gold label size */
-#pedigree .pedigree-intro { color: var(--c-ink-3); }                              /* matches the "To preserve market…" firewall subtext */
+#pedigree .pedigree-intro { color: #FFFFFF; }   /* full match to the row titles */                              /* matches the "To preserve market…" firewall subtext */
 #pedigree .logo-strip-overline { color: #FFFFFF; }                                /* sub-headers to pure white */
 #pedigree .logo-strip-block + .logo-strip-block { border-top: 1px solid rgba(255,255,255,0.10); }
 #pedigree .logo-strip-item img { filter: grayscale(1) brightness(0) invert(0.82); opacity: 0.82; }   /* invert marks so logos stay legible on the dark surface */
-#pedigree .logo-strip-item[data-fallback="AAVA"] img { height: 187.5px; max-width: 807.5px; }   /* AAVA — 1× (unchanged) */
+#pedigree .logo-strip-item:hover img { opacity: 1; }   /* id-scoped hover to match #rd-commitment (the base .logo-strip-item:hover rule is out-ranked by the id-level opacity above) */
+#pedigree .logo-strip-item[data-fallback="AAVA"] img { height: calc(60px * var(--logo-scale)); max-width: calc(258px * var(--logo-scale)); }   /* normalized (was 187.5px) so it no longer inflates the Industry row height */
 
 /* --- Unified vertical rhythm: identical subheading→logo gap in both rows --- */
 #pedigree .logo-strip-overline { margin-bottom: 2rem; }
-#pedigree .logo-strip { margin: 0; padding: 0; }
+#pedigree .logo-strip { margin: 0; padding: 0; flex-wrap: nowrap; align-items: flex-start; gap: clamp(0.8rem, 1.8vw, 2.5rem); }
 #pedigree .logo-strip-item { min-height: 0; }
 
 /* --- Optical-weight multipliers on the 50px / 215px base --- */
-#pedigree .logo-strip-item[data-fallback="ENS"] img             { height: 50px; max-width: 215px; }   /* 1×   */
-#pedigree .logo-strip-item[data-fallback="CNRS"] img            { height: 65px; max-width: 280px; }   /* 1.3× */
-#pedigree .logo-strip-item[data-fallback="ERC"] img             { height: 75px; max-width: 323px; }   /* 1.5× (listed as "HEC") */
-#pedigree .logo-strip-item[data-fallback="Sorbonne"] img        { height: 60px; max-width: 258px; }   /* 1.2× */
-#pedigree .logo-strip-item[data-fallback="Polytechnique"] img   { height: 75px; max-width: 323px; }   /* 1.5× */
-#pedigree .logo-strip-item[data-fallback="CentraleSupélec"] img { height: 65px; max-width: 280px; }   /* 1.3× */
-#pedigree .logo-strip-item[data-fallback="ETH Zürich"] img      { height: 45px; max-width: 194px; }   /* 0.9× */
-#pedigree .logo-strip-item[data-fallback="Caan"] img            { height: 50px; max-width: 215px; }   /* 1×   */
-#pedigree .logo-strip-item[data-fallback="Clius"] img           { height: 40px; max-width: 172px; }   /* 0.8× */
-#pedigree .logo-strip-item[data-fallback="Hashlock"] img        { height: 60px; max-width: 258px; }   /* 1.2× */
-#pedigree .logo-strip-item[data-fallback="Security4Web3"] img   { height: 75px; max-width: 323px; }   /* 1.5× */
-#pedigree .logo-strip-item[data-fallback="ChainAware"] img      { height: 60px; max-width: 258px; }   /* 1.2× */
-#pedigree .logo-strip-item[data-fallback="ESILV"] img           { height: 75px; max-width: 323px; }   /* 1.5× */
-.pedigree-logos { margin-top: clamp(72px, 10.5vh, 138px); }   /* gap increased 1.5x */
+#pedigree .logo-strip-item[data-fallback="ENS"] img             { height: calc(50px * var(--logo-scale)); max-width: calc(215px * var(--logo-scale)); }   /* 1×   */
+#pedigree .logo-strip-item[data-fallback="CNRS"] img            { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }   /* 1.3× */
+#pedigree .logo-strip-item[data-fallback="ERC"] img             { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }   /* 1.5× (listed as "HEC") */
+#pedigree .logo-strip-item[data-fallback="Sorbonne"] img        { height: calc(60px * var(--logo-scale)); max-width: calc(258px * var(--logo-scale)); }   /* 1.2× */
+#pedigree .logo-strip-item[data-fallback="Polytechnique"] img   { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }   /* 1.5× */
+#pedigree .logo-strip-item[data-fallback="CentraleSupélec"] img { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }   /* 1.3× */
+#pedigree .logo-strip-item[data-fallback="ETH Zürich"] img      { height: calc(45px * var(--logo-scale)); max-width: calc(194px * var(--logo-scale)); }   /* 0.9× */
+#pedigree .logo-strip-item[data-fallback="Caan"] img            { height: calc(50px * var(--logo-scale)); max-width: calc(215px * var(--logo-scale)); }   /* 1×   */
+#pedigree .logo-strip-item[data-fallback="Clius"] img           { height: calc(40px * var(--logo-scale)); max-width: calc(172px * var(--logo-scale)); }   /* 0.8× */
+#pedigree .logo-strip-item[data-fallback="Hashlock"] img        { height: calc(60px * var(--logo-scale)); max-width: calc(258px * var(--logo-scale)); }   /* 1.2× */
+#pedigree .logo-strip-item[data-fallback="Security4Web3"] img   { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }   /* 1.5× */
+#pedigree .logo-strip-item[data-fallback="ChainAware"] img      { height: calc(60px * var(--logo-scale)); max-width: calc(258px * var(--logo-scale)); }   /* 1.2× */
+#pedigree .logo-strip-item[data-fallback="ESILV"] img           { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }   /* 1.5× */
+#pedigree .logo-strip-item[data-fallback="Inria"] img           { height: calc(46px * var(--logo-scale)); max-width: calc(210px * var(--logo-scale)); }   /* wide 3.4:1 mark */
+#pedigree .logo-strip-item[data-fallback="FSMP"] img            { height: calc(60px * var(--logo-scale)); max-width: calc(200px * var(--logo-scale)); }
+/* Row 2 "Academic & Research Collaborations": only two logos — centre them (not space-between). */
+#pedigree .logo-strip--left { justify-content: flex-start; gap: clamp(3rem, 7vw, 8rem); }   /* ETH + ESILV flush left, same gap as before */
+.pedigree-logos { margin-top: clamp(28px, 4vh, 44px); }   /* compacted: header sits close to the first row */
 /* Light-surface logo treatment (default): dark grayscale marks legible on white; gold overline kept */
 .pedigree-logos .logo-strip-block:last-child { padding-bottom: 0; }   /* section padding-bottom is the only space below */
+#pedigree .logo-strip-block { padding: clamp(23px, 3.3vh, 40px) 0; }   /* ~40% tighter than base (was 38/66) — compacts the gaps between the 3 rows */
+#pedigree .pedigree-logos .logo-strip-block:last-child { padding-bottom: 0; }   /* keep 2rem section-bottom as the only trailing gap */
 .logo-strip-block { padding: clamp(38px, 5.5vh, 66px) 0; }
 .logo-strip-block + .logo-strip-block { border-top: 1px solid rgba(20, 22, 26, 0.08); }
 /* Kicker sized + coloured to match the 3-Pillar card titles (gold) */
@@ -1139,7 +1157,8 @@ a { color: inherit; text-decoration: none; }
   #engagements .eng-row { grid-template-columns: 1fr; gap: 16px; }   /* stack engagement rows */
   #engagements.eng-compact .eng-row, #engagements.eng-compact .eng-row--wide, #presence.eng-compact .eng-row { grid-template-columns: 1fr; gap: 16px; }   /* keep the compact Workshops + Presence layout stacked on mobile */
   #engagements .eng-row > .lr-status { justify-self: start; }   /* status pill left-aligned when stacked */
-  .pedigree-head { grid-template-columns: 1fr; gap: 16px; }
+  #pedigree .pedigree-head { grid-template-columns: 1fr; gap: 16px; }
+  #pedigree .pedigree-intro { text-align: left; margin-top: 10px; }
   #research-areas .ra-split { grid-template-columns: 1fr; gap: 30px; }   /* stack header above accordion */
   #rd-commitment .rd-split { grid-template-columns: 1fr; gap: 24px; }
   #engagement-process .ep-split { grid-template-columns: 1fr; gap: 28px; }
@@ -1885,3 +1904,10 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
   }
 }
 
+
+/* Ecosystem logos: keep all logos on ONE line by scaling them down on smaller
+   laptop viewports (16" >=1441px stays at full size). Phones fall back to wrap. */
+@media (max-width: 1440px) { #pedigree, #rd-commitment { --logo-scale: 0.86; } }
+@media (max-width: 1280px) { #pedigree, #rd-commitment { --logo-scale: 0.72; } }
+@media (max-width: 1080px) { #pedigree, #rd-commitment { --logo-scale: 0.60; } }
+@media (max-width: 767px)  { #pedigree, #rd-commitment { --logo-scale: 0.9; } #pedigree .logo-strip, #rd-commitment .logo-strip { flex-wrap: wrap; } }
