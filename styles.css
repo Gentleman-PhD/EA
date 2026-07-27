@@ -1,0 +1,1887 @@
+/* =====================================================================
+   EULER ADVISORY — styles.css  (multi-page)
+   Shared across index.html (executive narrative) and services.html
+   (quantitative deep dive). "Quiet luxury meets academic rigour."
+
+   Single surface: charcoal #0B0C0E throughout — NO light/dark intercalation.
+   Raised cards sit a few values above the surface; full-bleed sections never do.
+   Transitional serif display · geometric sans body · desaturated bronze ·
+   sage ring-fenced to climate · tabular lining figures on all data.
+   ===================================================================== */
+
+/* ----------------------------- DESIGN TOKENS ----------------------------- */
+:root {
+  --c-bg:        #0B0C0E;   /* the single charcoal surface */
+  --c-bg-raise:  #111317;   /* raised flat card */
+  --c-bg-raise2: #15181D;   /* nested / hover */
+  --c-line:      #23262C;   /* structural hairline */
+  --c-line-soft: #1A1D22;
+
+  --c-ink:       #F2F3F4;   /* primary   ~16.3:1 on bg */
+  --c-ink-2:     #E2E2E2;   /* body — crisp off-white per accessibility audit ~13.6:1 */
+  --c-ink-3:     #AEB2B8;   /* meta / small-caps — lifted so labels never dim ~7.0:1 */
+
+  --c-bronze:    #B89766;   /* accent — hairlines + key metrics */
+  --c-bronze-dk: #8C744E;
+  --c-bronze-tn: rgba(184, 151, 102, 0.14);
+  --c-gold:      #D4AF37;   /* premium metallic gold — feature titles/links */
+
+  --c-sage:      #AEB79C;   /* climate vertical only */
+  --c-sage-line: #8F9779;
+  --c-sage-tn:   rgba(143, 151, 121, 0.16);
+
+  /* Homepage curtain-reveal palette (off-brand colourway, homepage only) */
+  --c-offwhite:  #FAFAFA;   /* About + Solutions curtain surface */
+  --c-keppel:    #3BBA9C;   /* mint accent — curtain edge + card buttons + link hover */
+  --c-keppel-lt: #5AD8BA;   /* brighter mint for hover "light up" */
+  --c-gunmetal:  #2E3047;   /* large display text on off-white; Sharpened Banner block */
+  --c-rhythm:    #707793;   /* muted body / directory links on off-white */
+  --c-arsenic:   #3C3F58;   /* service-card base */
+  --c-outerspc:  #43455C;   /* service-card top of gradient */
+
+  --spacing-x:   clamp(4rem, 8vw, 8rem);   /* consistent section inset / right thesis boundary */
+  --edge-padding: var(--gutter);           /* = the page's left margin (gutter) — reused for hero bottom + thesis padding */
+
+  --f-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --f-mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --num: "tnum" 1, "lnum" 1;
+
+  --maxw: 1180px;
+  --gutter: clamp(20px, 5vw, 56px);
+  /* MACRO dark space — heavy vertical rhythm for the executive read */
+  --section-y: clamp(96px, 15vh, 200px);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ----------------------------- RESET / BASE ----------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 110px; scrollbar-gutter: stable; }   /* offset = fixed header height (96px) + buffer; reserve scrollbar space */
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--f-sans);
+  font-feature-settings: var(--num);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { margin: 0; font-weight: 400; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--c-bronze); color: #0B0C0E; }
+
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+/* Centered, readable column — capped at 65ch per the executive-narrative brief */
+.measure  { max-width: 65ch; margin-inline: auto; }
+.measure-wide { max-width: 80ch; margin-inline: auto; }
+
+.section { padding: var(--section-y) 0; position: relative; }
+.section--tight { padding: clamp(64px, 9vh, 120px) 0; }
+
+/* Section furniture */
+.section-kicker {
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--c-bronze); margin-bottom: 22px;
+}
+.section-title {
+  font-family: var(--f-serif);
+  font-size: clamp(1.8rem, 3.6vw, 2.9rem);
+  line-height: 1.16; letter-spacing: -0.01em; color: var(--c-ink);
+}
+.section-lede {
+  font-size: clamp(1.02rem, 1.4vw, 1.16rem); color: var(--c-ink-2);
+  line-height: 1.6; margin-top: 24px;
+}
+
+/* ----------------------------- BUTTONS ----------------------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-sans); font-size: 0.92rem; font-weight: 500; letter-spacing: 0.01em; line-height: 1;
+  padding: 15px 28px; border: 1px solid var(--c-line);   /* height = 0.92rem + 30px padding + 2px border */
+  transition: border-color .45s var(--ease), color .45s var(--ease), background .45s var(--ease);
+  cursor: pointer;
+}
+.btn-primary { background: transparent; color: var(--c-ink); border-color: var(--c-bronze); }
+.btn-primary:hover { background: var(--c-bronze-tn); border-color: var(--c-bronze); color: #fff; }
+.btn-ghost { background: transparent; color: var(--c-ink-2); }
+.btn-ghost:hover { color: var(--c-ink); border-color: var(--c-bronze-dk); }
+/* Outline button for light surfaces (dark ink, bronze hairline) */
+.btn-outline { background: transparent; color: #14161A; border-color: var(--c-bronze-dk); }
+.btn-outline:hover { background: var(--c-bronze-tn); border-color: var(--c-bronze); color: #14161A; }
+.btn .arrow { font-family: var(--f-mono); transition: transform .35s var(--ease); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* Severe, monospaced terminal-style action link (not a body link) */
+.link-quiet {
+  font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--c-bronze);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.link-quiet .arrow { transition: transform .35s var(--ease); }
+.link-quiet:hover { color: #fff; }
+.link-quiet:hover .arrow { transform: translateX(4px); }
+
+/* ----------------------------- HEADER / NAV ----------------------------- */
+.site-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  background: rgba(11, 12, 14, 0.72);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .4s var(--ease), background .4s var(--ease);
+}
+.site-header.scrolled { border-bottom-color: var(--c-line); background: rgba(11,12,14,0.9); }
+/* Header spans full width (not the centred 1180 container) so the logo sits on
+   the same left-gutter guide as the Hero H1, and the nav is flush to the right
+   gutter at the mirror distance. */
+.site-header .container { max-width: none; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }   /* vertical padding halved (was 96px): 12px above/below the 48px logo */
+/* Links flush right; adding Home on sub-pages expands them leftward. */
+.site-nav { justify-content: flex-end; }
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-logo { max-height: 48px; width: auto; display: block; }   /* scaled down to fit the sleeker header */
+.brand-mark { font-family: var(--f-serif); font-size: 1.45rem; color: var(--c-bronze); line-height: 1; }
+.brand-name { font-family: var(--f-serif); font-size: 1.18rem; letter-spacing: 0.01em; color: var(--c-ink); }
+.brand-thin { color: var(--c-ink-2); }
+
+.site-nav { display: flex; align-items: center; gap: 34px; }
+.site-nav a { font-size: 0.86rem; color: var(--c-ink-2); letter-spacing: 0.01em; position: relative; padding: 4px 0; transition: color .35s var(--ease); }
+.site-nav a::after { content: ""; position: absolute; left: 0; bottom: -2px; height: 1px; width: 0; background: var(--c-bronze); transition: width .4s var(--ease); }
+.site-nav a:hover { color: var(--c-ink); }
+.site-nav a:hover::after { width: 100%; }
+.site-nav a.is-active { color: var(--c-ink); }
+.site-nav a.is-active::after { width: 100%; }
+.nav-cta { color: var(--c-bronze) !important; }
+/* ---- Hover/focus dropdown submenus (desktop) ---- */
+.nav-item { position: relative; display: inline-flex; align-items: center; }
+.nav-dropdown {
+  position: absolute; top: calc(100% + 12px); right: 0; min-width: 234px;
+  background: rgba(11, 12, 14, 0.975); border: 1px solid var(--c-line);
+  padding: 8px 0; display: flex; flex-direction: column;
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .26s var(--ease), transform .26s var(--ease), visibility .26s var(--ease);
+  z-index: 60; box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+.nav-dropdown::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }   /* hover bridge */
+.nav-item:hover .nav-dropdown,
+.nav-item:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-dropdown a { padding: 9px 20px; font-size: 0.82rem; color: var(--c-ink-2); white-space: nowrap; transition: color .25s var(--ease), background .25s var(--ease); }
+.nav-dropdown a::after { display: none; }   /* no underline-grow inside the panel */
+.nav-dropdown a:hover { color: var(--c-gold); background: var(--c-bg-raise); }
+
+.nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: 0; cursor: pointer; padding: 6px; }
+.nav-toggle span { width: 24px; height: 1.5px; background: var(--c-ink); transition: transform .35s var(--ease), opacity .35s; }
+.mobile-nav { display: none; flex-direction: column; padding: 8px var(--gutter) 22px; border-bottom: 1px solid var(--c-line); background: rgba(11,12,14,0.96); }
+.mobile-nav a { padding: 13px 0; color: var(--c-ink-2); border-bottom: 1px solid var(--c-line-soft); font-size: 0.95rem; }
+.mobile-nav .mobile-sub { padding: 10px 0 10px 18px; font-size: 0.82rem; color: var(--c-ink-3); }   /* indented sub-items */
+.mobile-nav .mobile-sub:hover { color: var(--c-gold); }
+.mobile-nav.open { display: flex; }
+
+/* ----------------------------- HERO (index) ----------------------------- */
+/* Hero — value proposition vertically centred so it commands the first viewport */
+.hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 96px 0 72px; overflow: hidden; }
+/* Directional scrim — fades dark (left) to clear (right) so the copy reads over the video */
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(100deg, rgba(20, 22, 38, 0.95) 0%, rgba(20, 22, 38, 0.85) 28%, rgba(20, 22, 38, 0.40) 55%, rgba(20, 22, 38, 0.10) 100%); }
+#hero .hero-scrim { display: none; }   /* replaced by the directional ::before so the right side stays clear */
+.hero-surface {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(11,12,14,0.55) 0%, rgba(11,12,14,0.78) 55%, var(--c-bg) 100%),
+    url("Textured Black Surface.jpg") center/cover no-repeat;
+}
+.hero-light {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 38%), rgba(184,151,102,0.10) 0%, rgba(184,151,102,0.04) 35%, transparent 70%);
+}
+/* Hero text full-bleed left: strip the container's horizontal centring so the
+   block anchors to the true left gutter, leaving the negative space on the right.
+   Vertical centring (justify-content on .hero) is retained. */
+.hero-inner { position: relative; z-index: 2; text-align: left; max-width: none; margin-left: 0; margin-right: 0; }
+#hero .hero-inner {
+  max-width: 100%;
+  padding-left: clamp(3rem, 5vw, 6rem);
+  padding-right: clamp(3rem, 5vw, 6rem);
+  margin: 0;
+}
+.hero-inner .hero-title, .hero-inner .hero-slogan { max-width: 46ch; }
+.hero-inner .hero-sub { max-width: 68ch; }   /* wraps the subheadline to exactly two lines */
+.hero-slogan strong { font-weight: 600; font-style: italic; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--c-bronze); margin-bottom: 30px; }
+.hero-title { font-family: var(--f-serif); font-weight: 400; font-size: clamp(1.5rem, 4.2vw, 3.8rem); line-height: 1.08; letter-spacing: -0.015em; color: #FFFFFF; }   /* dialled down — elegant, not screaming */
+.hero-title .reveal-line { display: block; overflow: hidden; }
+.hero-sub { margin-top: 30px; max-width: 60ch; font-size: clamp(1.02rem, 1.5vw, 1.22rem); color: var(--c-ink-2); line-height: 1.55; }
+
+/* Hero value-proposition block (audiences + positioning). Left-aligned, constrained
+   to the hero's left column, scales down cleanly on mobile via the clamp + max-width. */
+.hero-subtext-container { margin-top: 2rem; margin-bottom: clamp(2rem, 4vh, 2.75rem); max-width: 60ch; font-size: clamp(1rem, 1.35vw, 1.125rem); line-height: 1.6; color: var(--c-ink-2); }
+.hero-intro { margin: 0 0 0.5rem; color: var(--c-ink-3); }
+.hero-list p { margin: 0; line-height: 1.75; }
+.hero-outro { margin: 1rem 0 0; font-weight: 500; letter-spacing: 0.04em; color: #F4F1EA; }
+.accent-gold { color: var(--c-gold); font-weight: 600; }   /* brand gold #D4AF37 */
+/* Slogan — gold, italic, just below the subheadline */
+.hero-slogan { margin-top: 22px; font-family: var(--f-serif); font-style: italic; font-size: clamp(1.05rem, 1.6vw, 1.32rem); color: var(--c-bronze); letter-spacing: 0.01em; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 44px; }
+
+.hero-inline-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+.hero-inline-link:hover {
+  color: var(--c-gold, #C7A962);
+  border-bottom: 1px solid var(--c-gold, #C7A962);
+}
+
+/* ---- Hero split: issuer/allocator self-selection, first screen ---- */
+.hero-split { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 2.5vw, 2rem); margin-top: auto; max-width: 1300px; }
+.hero-split-panel { display: flex; flex-direction: column; gap: 0.85rem; padding: clamp(1.5rem, 2.5vw, 2rem); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.14); text-decoration: none; transition: border-color .3s var(--ease), transform .3s var(--ease), background .3s var(--ease); }
+.hero-split-panel:hover { border-color: rgba(212,175,55,0.5); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
+.hero-split-label { font-family: var(--f-serif); font-size: clamp(1.15rem, 1.8vw, 1.4rem); font-weight: 500; color: var(--c-gold); text-align: center; }
+.hero-split-hook { font-size: clamp(0.92rem, 1.15vw, 1.02rem); line-height: 1.55; color: var(--c-ink-2); }
+.hero-split-mech { font-size: 1.02rem; font-weight: 600; line-height: 1.5; color: #FFFFFF; }
+.hero-split-mech strong { color: var(--c-gold); font-weight: 700; }
+.hero-split-cta { margin-top: auto; padding-top: 0.5rem; font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--c-gold); }
+@media (max-width: 760px) { .hero-split { grid-template-columns: 1fr; } }
+
+/* ----------------------------- TRUST BAR ----------------------------- */
+.trust-bar { border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
+.trust-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; flex-wrap: wrap; }
+.trust-credential { font-size: 0.9rem; color: var(--c-ink-2); }
+.trust-tags { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-3); display: flex; gap: 12px; align-items: center; }
+.trust-tags .dot, .footer-meta .dot { color: var(--c-bronze-dk); }
+
+/* ----------------------------- THE PROBLEM (index) ----------------------------- */
+.problem-statement {
+  font-family: var(--f-serif);
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  line-height: 1.34; letter-spacing: -0.01em; color: var(--c-ink); text-align: center;
+}
+.problem-foot { margin-top: 34px; text-align: center; color: var(--c-ink-3); font-size: 0.95rem; }
+
+/* ----------------------------- CHALLENGE & SOLUTION (index) -----------------------------
+   Structural two-column rows: serif gold sub-header (left) + body text (right),
+   separated by clean horizontal dividers. */
+.cs-rows { border-top: 1px solid var(--c-line); }
+.cs-row {
+  display: grid; grid-template-columns: 1fr 1fr;   /* hard 50/50 split: titles left half, text starts at exactly 50% */
+  gap: 0; align-items: start;
+  padding: clamp(30px, 4.5vh, 52px) 0;
+  border-bottom: 1px solid var(--c-line);
+}
+.cs-label { font-family: var(--f-serif); font-size: clamp(1.2rem, 1.8vw, 1.55rem); line-height: 1.25; color: var(--c-bronze); }
+.cs-body p { font-size: clamp(1rem, 1.25vw, 1.12rem); color: var(--c-ink-2); line-height: 1.72; max-width: none; }
+
+/* ----------------------------- INSIGHTS & RESEARCH (index) ----------------------------- */
+.insights-lede {
+  font-family: var(--f-serif);
+  font-size: clamp(1.35rem, 2.6vw, 1.95rem);
+  line-height: 1.42; letter-spacing: -0.005em; color: var(--c-ink); text-align: center;
+}
+.insights-lede em { font-style: italic; color: var(--c-bronze); }
+
+/* ----------------------------- PILLAR SUMMARY CARDS (index) ----------------------------- */
+/* Practice-area cards, side-by-side. Desktop 3-up; tablet 2-up; mobile 1-up. */
+.pillar-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+.pillar-card {
+  position: relative; background: var(--c-bg-raise);
+  padding: clamp(24px, 1.8vw, 34px);
+  display: flex; flex-direction: column; min-height: 340px;
+  /* Strict hairline border in a low-opacity desaturated bronze for severity */
+  border: 1px solid rgba(184, 151, 102, 0.25);
+  transition: background .5s var(--ease), border-color .5s var(--ease);
+}
+.pillar-card:hover { background: var(--c-bg-raise2); border-color: var(--c-bronze-dk); }
+/* Pillar 3 — Climate ring-fenced with the muted sage accent */
+.pillar-card--climate { border-color: rgba(143, 151, 121, 0.4); }
+.pillar-card--climate:hover { border-color: var(--c-sage-line); }
+.pillar-card .pc-index { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--c-bronze); margin-bottom: 22px; }
+.pillar-card--climate .pc-index { color: var(--c-sage); }
+.pillar-card .pc-index { margin-bottom: 18px; }
+.pillar-card .pc-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 1.8vw, 1.6rem); line-height: 1.2; color: var(--c-ink); margin-bottom: 18px; }
+.pillar-card .pc-summary { font-size: 0.9rem; color: var(--c-ink-2); line-height: 1.58; }
+/* Two-paragraph practice-card body; second paragraph leads with bold "How we work:" */
+.pillar-card .pc-text { font-size: 0.92rem; color: var(--c-ink-2); line-height: 1.62; margin-bottom: 16px; }
+.pillar-card .pc-text strong { color: var(--c-ink); font-weight: 600; }
+.pillar-card .pc-cta { margin-top: auto; padding-top: 30px; }
+
+/* ----------------------------- LOGO GRIDS (pedigree + ecosystem) ----------------------------- */
+.logo-block { margin-top: clamp(44px, 6vh, 76px); }
+.logo-block:first-of-type { margin-top: 0; }
+.logo-block-label { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-bronze); margin-bottom: 26px; padding-bottom: 14px; border-bottom: 1px solid var(--c-line); }
+.logo-grid { display: grid; gap: 1px; background: var(--c-line); border: 1px solid var(--c-line); }
+.logo-grid-academic { grid-template-columns: repeat(5, 1fr); }
+.logo-grid-ecosystem { grid-template-columns: repeat(7, 1fr); }
+.logo-cell { background: var(--c-bg-raise); aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; padding: 22px; position: relative; transition: background .4s var(--ease); }
+.logo-cell:hover { background: var(--c-bg-raise2); }
+.logo-cell img {
+  max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;
+  filter: grayscale(1) invert(1) brightness(1.04);
+  opacity: 0.6;                 /* monochrome, 60% per brief */
+  transition: opacity .4s var(--ease);
+}
+.logo-cell:hover img { opacity: 0.95; }
+/* Ecosystem logos are simple wordmarks/icons of mixed ink polarity; a uniform
+   silhouette keeps every mark legible (plain invert drops the light ones). */
+.logo-grid-ecosystem .logo-cell img { filter: grayscale(1) brightness(0) invert(0.82); }
+/* Typographic fallback if a logo file is ever missing (JS adds .logo-missing). */
+.logo-cell.logo-missing img { display: none; }
+.logo-cell.logo-missing::after { content: attr(data-fallback); font-family: var(--f-serif); font-size: 0.92rem; line-height: 1.2; color: var(--c-ink-3); text-align: center; }
+
+/* ----------------------------- ABOUT / FOUNDER (index #about) ----------------------------- */
+.founder { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 90px); align-items: start; margin-bottom: clamp(56px, 8vh, 100px); }
+.founder-name { font-family: var(--f-serif); font-size: clamp(1.6rem, 2.8vw, 2.1rem); color: var(--c-ink); line-height: 1.15; }
+.founder-role { color: var(--c-ink-3); font-size: 0.6em; }
+.founder-text { margin-top: 22px; font-size: clamp(1rem, 1.35vw, 1.1rem); color: var(--c-ink-2); line-height: 1.66; max-width: 62ch; }
+.cv { display: flex; flex-direction: column; }
+.cv li { display: grid; grid-template-columns: 130px 1fr; gap: 22px; padding: 18px 0; border-top: 1px solid var(--c-line); }
+.cv-key { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-bronze); padding-top: 3px; }
+.cv-val { font-size: 0.9rem; color: var(--c-ink-2); line-height: 1.55; }
+
+/* ----------------------------- ALLIANCES split ----------------------------- */
+.alliance-split { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(28px, 5vw, 70px); align-items: start; }
+.alliance-divider { width: 1px; background: var(--c-line); align-self: stretch; }
+.alliance-role { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-bronze); margin-bottom: 14px; }
+.alliance-col p:last-child { font-size: 0.94rem; color: var(--c-ink-2); line-height: 1.55; }
+
+/* ----------------------------- CONTACT ----------------------------- */
+.contact { position: relative; overflow: hidden; border-top: 1px solid var(--c-line); background: #1A1B28; }   /* synced to the Thesis Banner deep slate */
+.contact .contact-surface { display: none; }   /* flat Gunmetal Slate, no texture overlay */
+.contact-surface { position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(11,12,14,0.82) 0%, rgba(11,12,14,0.92) 100%), url("Textured Black Surface.jpg") center/cover no-repeat; }
+.contact-inner { position: relative; z-index: 1; text-align: center; }
+.contact-title { font-family: var(--f-serif); font-size: clamp(1.45rem, 2vw, 1.95rem); font-weight: 500; line-height: 1.15; color: var(--c-gold); }   /* size/weight synced to Service-Card titles; colour synced to the Services title */
+.contact-lede { margin: 24px auto 38px; max-width: 56ch; color: rgba(255,255,255,0.82); font-size: 1.05rem; }
+.contact .section-kicker { color: rgba(255,255,255,0.9); }   /* invert kicker for the dark Gunmetal panel */
+.contact-btn { font-family: var(--f-mono); letter-spacing: 0.02em; }
+
+/* ----------------------------- FOOTER ----------------------------- */
+.site-footer { border-top: 1px solid var(--c-line); padding: 60px 0 50px; }
+.site-footer .container { max-width: none; }   /* full-bleed gutter — logo aligns to the section-title left margin */
+/* 2-column footer: big logo left, all text right (flush to the right margin) */
+.footer-inner { display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: clamp(32px, 6vw, 100px); }
+.footer-logo { flex: none; }
+.footer-logo-img { width: 500px; max-width: 60vw; height: auto; display: block; }   /* 2x larger — commands the bottom-left corner */
+.footer-text { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; text-align: right; }
+.footer-nav { display: flex; gap: 26px; flex-wrap: wrap; justify-content: flex-end; }
+.footer-nav a { font-size: 0.84rem; color: var(--c-ink-2); }
+.footer-nav a:hover { color: var(--c-bronze); }
+.footer-statement { font-size: 0.82rem; color: var(--c-ink-3); line-height: 1.6; max-width: 80ch; }
+.footer-meta { font-family: var(--f-mono); font-size: 0.74rem; color: var(--c-ink-3); display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: flex-end; letter-spacing: 0.03em; }
+.footer-meta a { color: var(--c-ink-2); }
+.footer-meta a:hover { color: var(--c-bronze); }
+
+/* =====================================================================
+   SERVICES.HTML — THE QUANTITATIVE DEEP DIVE
+   ===================================================================== */
+
+/* Page hero (compact, no full-viewport) */
+.page-hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 96px 0 72px; border-bottom: 1px solid var(--c-line); position: relative; overflow: hidden; }   /* match the homepage hero height + vertical centering */
+.page-hero-surface { position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(11,12,14,0.74) 0%, var(--c-bg) 100%), url("Textured Black Surface.jpg") center/cover no-repeat; opacity: 0.6; }
+.page-hero .container { position: relative; z-index: 1; max-width: none; }   /* full-bleed left, like the homepage hero */
+.page-hero h1 { font-family: var(--f-serif); font-weight: 400; font-size: clamp(1.7rem, 6.4vw, 5.6rem); line-height: 1.04; letter-spacing: -0.015em; max-width: none; }   /* standardized hero size across Services + Research */
+.page-hero .page-sub { margin-top: 26px; max-width: 70ch; font-size: clamp(1.02rem, 1.4vw, 1.16rem); color: var(--c-ink-2); line-height: 1.6; }
+/* Research hero — oversized display title, forced onto a single line (no wrap) */
+.page-hero--xl h1 { white-space: nowrap; }   /* Research hero keeps the shared size, forced onto a single line */
+.page-hero .hero-slogan { margin-top: 26px; }
+.page-hero .hero-actions { margin-top: 36px; }
+/* ---- Services hero: exact 50/50 vertical split ---- */
+.page-hero--split { height: 100vh; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; padding: 0 !important; overflow: hidden; border-bottom: 0; margin-bottom: 0 !important; padding-bottom: 0 !important; }
+/* Top half — dark; content anchored to the bottom with a one-button-height gap below the buttons */
+.hero-top-half { position: relative; height: 66.66vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: calc(0.92rem + 32px); }
+.hero-top-half .container { position: relative; z-index: 1; }
+/* Bottom half (50vh) — cloned 3-Pillar grid: white, full-width, gold titles, vertical dividers, flush bottom */
+.hero-pillars { height: 33.33vh; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); background: #FFFFFF; border-top: 1px solid rgba(20, 22, 26, 0.16); margin: 0 !important; padding: 0 !important; }
+.hero-pillars--2 { grid-template-columns: repeat(2, 1fr); }   /* Events page: exactly 2 white cards */
+.hero-pillar { display: flex; align-items: center; justify-content: center; text-align: center; height: 100%; padding: clamp(20px, 3vw, 44px); background: #FFFFFF; border: 0; margin: 0 !important; transition: background .35s var(--ease); }
+.hero-pillar + .hero-pillar { border-left: 1px solid rgba(20, 22, 26, 0.16); }   /* same thin vertical dividers as the homepage grid */
+.hero-pillar:hover { background: #F4F1EA; }
+.hero-pillar-title { font-family: var(--f-serif); color: var(--c-gold); font-size: clamp(1.5rem, 2.3vw, 2rem); font-weight: 500; line-height: 1.25; text-align: center; transition: color .35s var(--ease); }   /* exact homepage gold title */
+.hero-pillar:hover .hero-pillar-title { color: var(--c-bronze-dk); }
+
+/* ---- Homepage hero: 'Two Doors' 2/3 dark + 1/3 white split ---- */
+.hero.hero--split { height: 100vh; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; padding: 0 !important; overflow: hidden; border-bottom: 0; margin-bottom: 0 !important; padding-bottom: 0 !important; }
+.hero.hero--split .hero-inner { margin: 0; }
+/* Anchor the top content to the bottom: gap below the buttons == one button height (0.92rem + 32px) */
+.hero.hero--split .hero-top-half { justify-content: flex-end; padding-bottom: calc(0.92rem + 32px); }
+/* Two-door cards: stacked gold title + dark-grey sub, centred both axes (gold overrides the white-bg dark title used on Services) */
+.hero .hero-pillar { flex-direction: column; gap: clamp(8px, 1.2vh, 14px); }
+.hero .hero-pillar-title { color: var(--c-gold); font-size: clamp(1.3rem, 2vw, 1.75rem); }
+.hero .hero-pillar:hover .hero-pillar-title { color: var(--c-bronze-dk); }
+.hero .hero-pillar-sub { font-size: clamp(0.84rem, 1vw, 0.98rem); color: #5A5E64; line-height: 1.45; max-width: 36ch; text-align: center; }
+/* 'Two Doors' content: prominent trigger, supporting body, gold action */
+.hero .hero-pillar { gap: clamp(12px, 1.6vh, 20px); }
+.hero .hero-pillar-trigger { font-family: var(--f-serif); font-size: clamp(1.15rem, 1.7vw, 1.55rem); font-weight: 500; color: #14161A; line-height: 1.28; max-width: 30ch; }
+.hero .hero-pillar-body { font-size: clamp(0.86rem, 1vw, 0.98rem); color: #5A5E64; line-height: 1.5; max-width: 42ch; }
+.hero .hero-pillar-action { font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-bronze-dk); transition: color .3s var(--ease); }
+.hero .hero-pillar:hover .hero-pillar-action { color: var(--c-gold); }
+/* In-door topic routers: quiet mono small-caps chips, '/'-separated, gold on hover */
+.hero .hero-pillar-action { text-decoration: none; }
+.hero .door-chips { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 0; margin-top: 4px; max-width: 40ch; }
+.hero .door-chip { font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: #3A3D42; text-decoration: none; padding: 2px 10px; position: relative; transition: color .25s var(--ease); }
+.hero .door-chip + .door-chip::before { content: "/"; position: absolute; left: -2px; color: rgba(20, 22, 26, 0.22); }
+.hero .door-chip::after { display: none; }
+.hero .door-chip:hover { color: var(--c-bronze-dk); text-decoration: underline; text-underline-offset: 3px; }
+
+/* =====================================================================
+   RESEARCH — Workshops, lectures & talks: solid black surface, gold accents,
+   4-column ledger rows  [date + type] | [logo] | [content] | [status].
+   ===================================================================== */
+#engagements { background: #2E3047; padding-top: clamp(64px, 9vh, 120px); padding-bottom: clamp(64px, 9vh, 120px); }   /* top matches Bridging; bottom gives room below the CTA */
+#engagements .container { max-width: none; }   /* full-bleed gutter width, matches the 'Bridging' section */
+/* Title scaled up toward the oversized hero display size */
+#engagements .section-title { color: var(--c-ink); font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; }
+
+/* 4-column rows; extra top breathing room between the title and the first row */
+#engagements .eng-rows { margin-top: clamp(80px, 14vh, 168px); position: relative; }   /* 2× the prior gap below the section title */
+#engagements .eng-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.7fr) minmax(150px, 1fr) 2.6fr minmax(110px, auto);
+  gap: clamp(20px, 3vw, 56px); align-items: start;
+  padding: clamp(30px, 4.5vh, 52px) 0;
+  position: relative;
+}
+/* Dividers drawn left -> right on scroll, exactly like the homepage 'Bridging' rows.
+   Pseudo-element lines (scaleX 0 -> 1) replace static borders; JS toggles .draw-in. */
+#engagements .eng-row::after,
+#engagements .eng-row:first-child::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; background: rgba(255, 255, 255, 0.22);
+  transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease);
+}
+#engagements .eng-row::after { bottom: 0; }
+#engagements .eng-row:first-child::before { top: 0; }
+#engagements .eng-row.draw-in::after,
+#engagements .eng-row.draw-in::before { transform: scaleX(1); }
+/* last row keeps its animated bottom divider, matching the rows above */
+/* Centered 'View All Sessions' CTA below the final divider (same spacing as the Ongoing Research CTA) */
+#engagements .sessions-cta, #presence .sessions-cta { display: flex; justify-content: center; margin-top: clamp(60px, 8vh, 96px); }
+/* 1 — far left: date (top) + event type (bottom) — enlarged */
+#engagements .eng-meta { display: flex; flex-direction: column; gap: 8px; }
+#engagements .eng-date { font-family: var(--f-mono); font-size: clamp(1.1rem, 1.5vw, 1.4rem); letter-spacing: 0.04em; color: var(--c-gold); }
+#engagements .eng-type { font-family: var(--f-mono); font-size: clamp(0.8rem, 1vw, 0.92rem); letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-ink-3); }
+/* 2 — middle-left: institution logo, inverted for the dark surface — more prominent */
+#engagements .eng-logo-cell { align-self: start; }
+#engagements .eng-logo { height: 58px; width: auto; max-width: 220px; object-fit: contain; filter: grayscale(1) brightness(0) invert(0.82); opacity: 0.82; }
+
+/* all-sessions.html only (.eng-compact): logos scaled ~80% and the logo column
+   narrowed so the text block shifts left and the description gains width.
+   Scoped so research.html's #engagements section is unaffected. */
+#engagements.eng-compact .eng-logo { height: 46px; max-width: 176px; }
+/* Institutional Presence logos: no fixed box — centred in the cell, sized per-logo by
+   max-height so square and wide marks read at a comparable visual weight. */
+#presence.eng-compact .eng-logo-cell { display: flex; align-items: center; justify-content: center; }
+#presence.eng-compact .eng-logo { height: auto; width: auto; max-width: 100%; object-fit: contain; }
+#presence .eng-logo.logo-waib { max-height: 87px; }   /* 58 × 1.5 */
+#presence .eng-logo.logo-pot  { max-height: 69px; }   /* 46 × 1.5 */
+#presence .eng-logo.logo-pbw  { max-height: 48px; }   /* 40 × 1.2 */
+#presence .eng-logo.logo-daf  { max-height: 99px; }   /* 58 × 1.7 */
+#engagements.eng-compact .eng-row { grid-template-columns: minmax(100px, 0.6fr) minmax(120px, 0.7fr) 3.2fr minmax(100px, auto); }
+/* Workshops (ETH) + Institutional Presence share ONE 3-column template with FIXED date and
+   logo columns, so the text column begins on the exact same vertical line in both sections. */
+#engagements.eng-compact .eng-row--wide, #presence.eng-compact .eng-row { grid-template-columns: 140px 180px minmax(0, 1fr); }
+/* Fluid section heading so 'Workshops, Lectures and Talks' (and Institutional Presence) scale down on 13-inch screens. */
+#engagements.eng-compact .section-title, #presence.eng-compact .section-title { font-size: clamp(2rem, 4vw, 3.5rem); }
+/* Bottom action row: 'Official Announcement' (left) and See more / Show less (right) on one baseline. */
+#engagements .eng-title--date, #presence .eng-title--date { font-family: var(--f-mono); font-size: clamp(1.1rem, 1.5vw, 1.4rem); font-weight: 400; letter-spacing: 0.04em; color: var(--c-gold); line-height: 1.3; margin: 0; }
+
+/* Line-clamp "See more / Show less" for long engagement descriptions.
+   Clamps to 2 lines until JS adds .expanded. Scoped to #engagements. */
+#engagements .clamp-text, #presence .clamp-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#engagements .clamp-text.expanded, #presence .clamp-text.expanded { -webkit-line-clamp: unset; display: block; overflow: visible; }
+#engagements .clamp-toggle { flex: none; white-space: nowrap; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: currentColor; opacity: 0.6; transition: opacity 0.2s; }
+#engagements .clamp-toggle:hover { opacity: 1; }
+/* Institutional Presence action bar on WHITE: borderless text controls in dark ink. */
+#presence .clamp-toggle { flex: none; white-space: nowrap; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #14161A; opacity: 0.6; transition: opacity 0.2s; }
+#presence .clamp-toggle:hover { opacity: 1; }
+#presence .eng-actions a { color: #14161A; }
+/* 3 — middle-right: title, venue, description */
+#engagements .eng-content { display: flex; flex-direction: column; gap: 10px; }
+#engagements .eng-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 500; color: var(--c-ink); line-height: 1.2; }
+#engagements .eng-venue { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--c-ink-3); }
+#engagements .eng-role { font-size: clamp(1rem, 1.25vw, 1.12rem); color: var(--c-ink-2); line-height: 1.7; margin-top: 4px; }
+/* 4 — far right: status pill */
+#engagements .eng-row > .lr-status { justify-self: end; align-self: start; }
+#engagements .eng-row:last-child { border-bottom: 0; }   /* no trailing divider; section bottom padding gives the breathing room */
+#engagements .eng-logo-cell.logo-missing::after { color: var(--c-ink-3); }
+
+/* --- About page only: Institutional Presence on a WHITE surface ---
+   Gold accents (eng-date, lr-status bronze) are kept; every white/gray ink
+   is inverted to near-black. Scoped to .eng-light so #engagements on
+   research.html keeps the dark theme. */
+#engagements.eng-light { background: #FFFFFF; }
+#engagements.eng-light .section-title { color: #14161A; }
+#engagements.eng-light .eng-title { color: #14161A; }
+#engagements.eng-light .eng-role { color: #1A1C20; }
+#engagements.eng-light .eng-type,
+#engagements.eng-light .eng-venue,
+#engagements.eng-light .eng-logo-cell.logo-missing::after { color: #5A5E64; }
+#engagements.eng-light .eng-row::after,
+#engagements.eng-light .eng-row:first-child::before { background: rgba(20, 22, 26, 0.18); }
+#engagements.eng-light .btn-primary { color: #14161A; }
+#engagements.eng-light .btn-primary:hover { color: #14161A; }
+
+/* =====================================================================
+   RESEARCH — Ongoing Research: hybrid (Ecosystem header + 3-Pillar card grid).
+   ===================================================================== */
+#pipeline { background: #FFFFFF; padding-top: clamp(64px, 9vh, 120px); padding-bottom: 0; }   /* inverted to white; top matches Ecosystem; bottom flush */
+#pipeline .container { max-width: none; }   /* header full-bleed gutter, matches the Ecosystem header */
+#pipeline .pedigree-head .section-title { color: #14161A; font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; }   /* white section -> dark title, matched to Workshops / Research Areas */
+#pipeline .pedigree-intro { color: #1A1C20; }
+#pipeline .fb-grid { --fb-line: rgba(20, 22, 26, 0.16); margin-top: clamp(40px, 6vh, 64px); }   /* normalized to the standard header-to-content gap */
+/* Card hover: 'pop up' + gold border, matching the Quantitative Development cards */
+#pipeline .fb-col { position: relative; transition: background .4s var(--ease), box-shadow .4s var(--ease); }
+#pipeline .fb-col:hover { box-shadow: inset 0 0 0 1px var(--c-gold); background: #F7F4EE; z-index: 1; }
+/* Cover image at the very top of each card */
+#pipeline .pl-cover { width: 100%; height: 170px; object-fit: cover; display: block; margin-bottom: clamp(18px, 2vw, 26px); background: #ECECEC; }   /* shorter panoramic header (was 220px) */
+/* Status badge anchored to the card's bottom-right corner; border wraps the text */
+#pipeline .pl-badge { position: absolute; bottom: 24px; right: 24px; z-index: 2; display: inline-block; width: max-content; white-space: nowrap; font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-gold); border: 1px solid var(--c-gold); background: rgba(11, 12, 14, 0.62); padding: 4px 10px; }
+/* 'Read more' link, right-aligned just above the status badge */
+#pipeline .pl-readmore, #pipeline .pl-readmore:visited { position: absolute; right: 24px; bottom: 56px; z-index: 2; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--c-gold); text-decoration: none; transition: opacity .3s var(--ease); }
+#pipeline .pl-readmore:hover { text-decoration: underline; opacity: 0.72; }
+/* Centered 'View All Research' CTA below the trimmed grid */
+#pipeline .pipeline-cta { display: flex; justify-content: center; margin-top: clamp(60px, 8vh, 96px); }
+#pipeline:has(.pipeline-cta) { padding-bottom: clamp(64px, 9vh, 120px); }   /* restore bottom padding only when the CTA is present (main page) */
+#pipeline .fb-col .fb-title { color: var(--c-gold); margin-bottom: 16px; }   /* gold kept exactly as specified */
+#pipeline .fb-col { padding-top: clamp(22px, 2.6vw, 40px); padding-bottom: clamp(22px, 2.6vw, 40px); }   /* tighter top/bottom than the shared .fb-col */
+#pipeline .fb-col .fb-text { color: #1A1C20; font-size: 0.86rem; line-height: 1.5; margin-bottom: 0; }   /* remove excess gap before the collaborators footer */
+/* Collaborators block pinned to the card bottom */
+#pipeline .fb-col .pl-collab { margin-top: 0; padding-top: 16px; }   /* sit right below the text; gap equals the 16px title-to-text gap */
+#pipeline .pl-collab-label { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--c-gold); margin-bottom: 16px; }
+#pipeline .pl-collab-logos { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
+#pipeline .pl-collab-logos img { height: 30px; width: auto; max-width: 92px; object-fit: contain; filter: grayscale(1); opacity: 0.72; }
+/* Banque de France mark: larger, full-contrast, and multiplied so its white/grey
+   JPEG background disappears into the white card. */
+#pipeline .pl-collab-logos img.bdf-logo { height: auto; width: auto; max-height: 75px; max-width: 220px; filter: none; opacity: 1; mix-blend-mode: multiply; }   /* ~1.5x larger (50px -> 75px); width capped so it never reaches the WORKING PAPER badge */
+#pipeline .fb-col:nth-child(n+4) { border-top: 1px solid var(--fb-line); }   /* divider between the two card rows */
+#pipeline .fb-col:nth-child(3n+1) { border-left: 0; }   /* no stray left border on row-2 first column */
+
+/* =====================================================================
+   RESEARCH — Research areas: split header + full-bleed 2×2 grid (gold titles).
+   ===================================================================== */
+#research-areas { background: #FFFFFF; padding-top: clamp(64px, 9vh, 120px); }   /* white background, black text */
+#research-areas .container { max-width: none; }   /* full-bleed gutter */
+/* Asymmetric split: header left, accordion right */
+#research-areas .ra-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 110px); align-items: start; }
+#research-areas .section-title { color: #14161A; font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; }
+#research-areas .pedigree-intro { color: #1A1C20; margin-top: 26px; max-width: 36ch; }
+/* Accordion — clean text rows divided by hairlines, no boxes */
+#research-areas .ra-accordion { border-top: 1px solid rgba(20, 22, 26, 0.18); margin-top: clamp(44px, 5.5vw, 84px); }   /* drop the first item below the title baseline */
+#research-areas .ra-item { border-bottom: 1px solid rgba(20, 22, 26, 0.18); }
+#research-areas .ra-row { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 28px; background: none; border: 0; cursor: pointer; padding: clamp(20px, 2.4vw, 30px) 0; text-align: left; }
+#research-areas .ra-title { font-family: var(--f-serif); font-size: clamp(1.25rem, 1.9vw, 1.6rem); font-weight: 500; color: #14161A; line-height: 1.25; transition: color .3s var(--ease); }
+#research-areas .ra-icon { flex: none; font-family: var(--f-sans); font-size: 1.7rem; line-height: 1; color: var(--c-bronze-dk); transition: transform .35s var(--ease), color .3s var(--ease); }
+#research-areas .ra-row:hover .ra-title { color: var(--c-bronze-dk); }
+#research-areas .ra-row:hover .ra-icon { color: var(--c-gold); }
+#research-areas .ra-item.open .ra-icon { transform: rotate(45deg); }   /* + becomes × */
+#research-areas .ra-panel { overflow: hidden; max-height: 0; transition: max-height .45s var(--ease); }
+#research-areas .ra-panel p { font-size: clamp(1rem, 1.2vw, 1.1rem); color: #1A1C20; line-height: 1.7; padding-bottom: clamp(20px, 2.4vw, 30px); max-width: none; padding-right: clamp(0px, 2vw, 32px); }   /* fill the accordion column; small right inset keeps text off the edge */
+#research-areas .ra-item.open .ra-panel { max-height: 340px; }
+
+/* =====================================================================
+   RESEARCH — Institutional R&D Commitment: white, asymmetric 1fr 2fr split.
+   ===================================================================== */
+#rd-commitment { background: var(--c-bg); padding-top: clamp(64px, 9vh, 120px); padding-bottom: clamp(40px, 6vh, 84px); }   /* top matches Research Areas; bottom trimmed to ~1/3 */
+#rd-commitment .container { max-width: none; }   /* full-bleed gutter */
+#rd-commitment .rd-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 110px); align-items: start; }   /* 1fr 1fr — identical to Research Areas, so the vertical divider aligns */
+#rd-commitment .section-title { color: var(--c-ink); font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; }   /* matched to the Workshops title */
+#rd-commitment .rd-intro, #rd-commitment .rd-outro { font-size: clamp(1rem, 1.25vw, 1.14rem); color: var(--c-ink-2); line-height: 1.72; max-width: none; }   /* span the full column to the right margin */
+#rd-commitment .rd-list { list-style: none; margin: clamp(26px, 3.4vh, 40px) 0; padding: 0; }
+#rd-commitment .rd-list li { position: relative; padding-left: 26px; margin-bottom: 16px; font-size: clamp(1rem, 1.2vw, 1.1rem); color: var(--c-ink-2); line-height: 1.6; max-width: none; }
+#rd-commitment .rd-list li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 6px; height: 6px; background: #FFFFFF; border-radius: 50%; }   /* white bullet dots */
+/* Academic trust-signal logo block — homepage 'Foundational Research & Rigor' treatment, on the dark surface */
+#rd-commitment .rd-logos { margin-top: clamp(48px, 7vh, 96px); }
+#rd-commitment .logo-strip-block { padding-bottom: 0; }   /* trim dead space below the logos */
+#rd-commitment .logo-strip-overline { color: var(--c-gold); }   /* gold overline, exactly as on the homepage */
+/* Academic & Research logos: per-logo sizing copied verbatim from the homepage #pedigree
+   block so the strip renders 100% identically on both pages (dark surface, inverted marks). */
+#rd-commitment .logo-strip-item { min-height: 0; }
+#rd-commitment .logo-strip-item img { height: 50px; width: auto; max-width: 215px; object-fit: contain; filter: grayscale(1) brightness(0) invert(0.82); opacity: 0.82; }
+#rd-commitment .logo-strip-item[data-fallback="ENS"] img             { height: 50px; max-width: 215px; }
+#rd-commitment .logo-strip-item[data-fallback="CNRS"] img            { height: 65px; max-width: 280px; }
+#rd-commitment .logo-strip-item[data-fallback="ERC"] img             { height: 75px; max-width: 323px; }
+#rd-commitment .logo-strip-item[data-fallback="Sorbonne"] img        { height: 60px; max-width: 258px; }
+#rd-commitment .logo-strip-item[data-fallback="Polytechnique"] img   { height: 75px; max-width: 323px; }
+#rd-commitment .logo-strip-item[data-fallback="CentraleSupélec"] img { height: 65px; max-width: 280px; }
+#rd-commitment .logo-strip-item[data-fallback="ETH Zürich"] img      { height: 45px; max-width: 194px; }
+#rd-commitment .logo-strip-item[data-fallback="ESILV"] img           { height: 75px; max-width: 323px; }
+#rd-commitment .logo-strip-item:hover img { opacity: 1; }
+#rd-commitment .logo-strip-item.logo-missing::after { color: var(--c-ink-3); }
+
+/* Independence framing strip + audience */
+.framing { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--c-line); border: 1px solid var(--c-line); }
+.framing .fr-cell { background: var(--c-bg-raise); padding: 26px clamp(18px, 1.6vw, 26px); }
+.framing .fr-idx { font-family: var(--f-serif); font-size: 1.2rem; color: var(--c-bronze); }
+.framing .fr-cell h3 { font-size: 0.96rem; color: var(--c-ink); margin: 12px 0 8px; line-height: 1.25; }
+.framing .fr-cell p { font-size: 0.82rem; color: var(--c-ink-3); line-height: 1.5; }
+
+.audience-band { display: flex; flex-wrap: wrap; gap: 10px; }
+.audience-chip { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--c-ink-2); border: 1px solid var(--c-line); padding: 8px 14px; }
+
+/* Pillar section header on services. Sections are colour-blocked and sit flush:
+   no bottom padding (grid edge meets the next section), generous card padding. */
+.pillar-section { scroll-margin-top: 110px; padding-bottom: 0; }
+.pillar-section .fb-col { padding-block: clamp(44px, 6vh, 88px); }
+/* Same hover dynamics as the homepage cards: background pop + gold border */
+.pillar-section .fb-col:hover { box-shadow: inset 0 0 0 1px var(--c-gold); background: var(--c-bg-raise2); }
+.pillar-section--light .fb-col:hover { background: #F2EFE9; }
+.pillar-section--gold .fb-col:hover { background: #C9A94A; }
+/* Strategy section has a gold background — make text selection legible (white) */
+#strategy-due-diligence ::selection { background-color: #FFFFFF; color: #2E3047; }
+
+/* ===== 3-colour scroll rhythm across the three pillars ===== */
+/* Section 1 — White: black body text, gold accents kept. */
+.pillar-section--light { background: #FFFFFF; }
+.pillar-section--light .section-title { color: #14161A; }
+.pillar-section--light .fb-grid { --fb-line: rgba(20, 22, 26, 0.16); }
+.pillar-section--light .fb-title { color: var(--c-bronze); }
+.pillar-section--light .ps-text { color: #14161A; }
+.pillar-section--light .ps-solution + .ps-text { color: #2E3047; }
+.pillar-section--light .ps-pain { color: #4A4E54; }
+.pillar-section--light .ps-solution { color: var(--c-bronze); }
+/* Section 2 — Black: site default (white text, gold accents) — no overrides. */
+/* Solid-black pillar variant (used by Quantitative Development) */
+.pillar-section--dark { background: #2E3047; }
+/* Section 3 — Gold (#B89766): black text, black accents for contrast. */
+.pillar-section--gold { background: #D4AF37; }   /* solid brand gold (Strategy section) */
+.pillar-section--gold .section-title { color: #14161A; }
+.pillar-section--gold .fb-grid { --fb-line: rgba(0, 0, 0, 0.24); }
+.pillar-section--gold .fb-title { color: #14161A; }
+.pillar-section--gold .ps-text { color: #1A1C20; }
+.pillar-section--gold .ps-solution + .ps-text { color: #2E3047; }
+.pillar-section--gold .ps-pain,
+.pillar-section--gold .ps-solution { color: #14161A; }
+.pillar-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 14px; }
+.pillar-head .ph-idx { font-family: var(--f-mono); font-size: 0.82rem; color: var(--c-bronze); }
+.pillar-section--climate .ph-idx { color: var(--c-sage); }
+.pillar-head h2 { font-family: var(--f-serif); font-size: clamp(1.6rem, 2.8vw, 2.2rem); line-height: 1.16; color: var(--c-ink); }
+.pillar-intro { color: var(--c-ink-2); font-size: 1rem; line-height: 1.6; max-width: 76ch; margin-bottom: 38px; }
+/* Section subtitle under each pillar title — elegant serif italic */
+.pillar-subtitle { font-family: var(--f-serif); font-style: italic; font-size: clamp(1.08rem, 1.6vw, 1.32rem); color: var(--c-ink-2); line-height: 1.4; max-width: 70ch; margin-bottom: clamp(34px, 5vh, 52px); }
+
+/* Pain / Solution blocks inside the expanded accordion — monospaced labels,
+   clean typographic hierarchy. Pain reads muted; Solution carries the gold accent. */
+.pa-ps + .pa-ps { margin-top: 22px; }   /* divider line removed */
+/* top (former "Pain") block grows so the SOLUTION blocks align across the row */
+.pillar-section .fb-col .pa-ps:first-of-type { flex-grow: 1; }   /* pushes every 'Solution' block to the same bottom line across the row */
+/* Centered gold card titles + enlarged gold 'Solution' label — matched to the homepage 3-Pillar cards */
+.pillar-section .fb-title { text-align: center; font-size: clamp(1.5rem, 2.3vw, 2rem); font-weight: 500; }
+.pillar-section--dark .fb-title,
+.pillar-section--light .fb-title { color: var(--c-gold); }
+.pillar-section .ps-solution { font-size: 0.8rem; }
+.pillar-section--dark .ps-solution,
+.pillar-section--light .ps-solution { color: var(--c-gold); }
+.ps-label { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 11px; }
+.ps-pain { color: var(--c-ink-3); }
+.ps-solution { color: var(--c-bronze); }
+.ps-text { font-size: 0.96rem; color: var(--c-ink-2); line-height: 1.64; max-width: 82ch; }
+.ps-solution + .ps-text { color: var(--c-ink); }
+.pillar-why { font-size: 0.92rem; color: var(--c-ink-2); line-height: 1.6; max-width: 80ch; margin-top: 30px; }
+.why-label { display: inline-block; font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-bronze); margin-right: 10px; border: 1px solid var(--c-bronze-dk); padding: 2px 8px; vertical-align: middle; }
+.pillar-section--climate .why-label { color: var(--c-sage); border-color: var(--c-sage-line); }
+
+/* ===== FULL-BLEED EDGE-TO-EDGE GRID (homepage practice + services pillars) =====
+   Rendered as a direct child of <section> (outside .container) so it spans the
+   full viewport width. Columns sit flush, separated by 1px grid lines, with
+   internal padding for text breathability. Equal-height columns (grid stretch). */
+.fb-grid {
+  --fb-line: var(--c-line);
+  display: grid; width: 100%; align-items: stretch;
+  border-top: 1px solid var(--fb-line);
+  border-bottom: 1px solid var(--fb-line);
+}
+.fb-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.fb-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.fb-col {
+  height: 100%;
+  padding: clamp(28px, 3.4vw, 56px);
+  display: flex; flex-direction: column;
+  transition: background .4s var(--ease);
+}
+.fb-col + .fb-col { border-left: 1px solid var(--fb-line); }
+.fb-title { font-family: var(--f-serif); font-size: clamp(1.2rem, 1.8vw, 1.5rem); line-height: 1.22; color: var(--c-bronze); margin-bottom: 22px; }
+.fb-text { font-size: 0.92rem; color: var(--c-ink-2); line-height: 1.62; margin-bottom: 16px; }
+.fb-text strong { color: var(--c-ink); font-weight: 600; }
+.fb-cta { margin-top: auto; padding-top: 26px; }
+
+/* Typographic regulatory citations (shared).
+   COMPLIANCE: regulators are NEVER rendered as logos/icons — only neutral
+   monospaced reference tags. */
+.legal-citation { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.02em; color: var(--c-ink-3); border: 1px solid var(--c-line); padding: 2px 7px; white-space: nowrap; }
+.pa-citations .legal-citation { color: var(--c-bronze); border-color: var(--c-bronze-dk); }
+
+/* Pipeline + walled commercial on services */
+.pipeline-note { font-size: 0.88rem; color: var(--c-ink-3); line-height: 1.6; border-left: 1px solid var(--c-bronze-dk); padding-left: 18px; max-width: 84ch; }
+.pipeline-tag { display: inline-block; font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-bronze); margin-right: 10px; }
+
+/* Commercial Web3 — isolated at the absolute bottom of services.html,
+   visually demoted: no card border, lowered opacity. */
+#commercial.section { border-top: 1px solid var(--c-line); }
+.commercial-wall { border: 0; padding: 0; opacity: 0.75; }
+.commercial-kicker { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-ink-3); margin-bottom: 16px; }
+.commercial-title { font-family: var(--f-serif); font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--c-ink-2); margin-bottom: 16px; }
+.commercial-note { font-size: 0.94rem; color: var(--c-ink-3); line-height: 1.6; max-width: 78ch; margin-bottom: 36px; }
+.commercial-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.commercial-item h3 { font-family: var(--f-serif); font-size: 1.1rem; color: var(--c-ink-2); margin-bottom: 10px; line-height: 1.25; }
+.commercial-item p { font-size: 0.85rem; color: var(--c-ink-3); line-height: 1.55; }
+
+/* =====================================================================
+   RESEARCH.HTML — academic archive aesthetic (text-driven, no imagery)
+   ===================================================================== */
+
+/* Terminal-style action link (also used in the homepage Insights block) */
+.terminal-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono); font-size: 0.82rem; letter-spacing: 0.03em;
+  color: var(--c-bronze); border: 1px solid var(--c-bronze-dk);
+  padding: 13px 20px; transition: background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+}
+.terminal-link .tl-caret { color: var(--c-bronze); }
+.terminal-link:hover { background: var(--c-bronze-tn); color: #fff; border-color: var(--c-bronze); }
+
+/* Section 1 — Academic Engagements: a severe mono ledger, no images */
+.ledger { border-top: 1px solid var(--c-line); }
+.ledger-row {
+  display: grid; grid-template-columns: 110px 96px 1fr auto;
+  gap: clamp(16px, 2vw, 36px); align-items: start;
+  padding: 28px 0; border-bottom: 1px solid var(--c-line);
+}
+
+/* Monochrome institutional logo — a small scan anchor, height-locked so it
+   never breaks the typographic vertical rhythm. Luminance-inverted so dark-ink
+   logos stay visible on charcoal (plain grayscale would vanish here). */
+.eng-logo-cell { display: inline-flex; align-items: center; min-height: 32px; align-self: start; margin-top: 2px; }
+.eng-logo {
+  height: 32px; width: auto; max-width: 96px; object-fit: contain;
+  filter: grayscale(1) invert(1) brightness(1.04);
+  opacity: 0.7;                 /* muted */
+  transition: opacity .4s var(--ease);
+}
+.ledger-row:hover .eng-logo { opacity: 0.92; }
+/* Graceful text fallback when a placeholder logo file is absent */
+.eng-logo-cell.logo-missing .eng-logo { display: none; }
+.eng-logo-cell.logo-missing::after {
+  content: attr(data-fallback);
+  font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--c-ink-3); line-height: 1.3;
+}
+.lr-meta { display: flex; flex-direction: column; gap: 6px; }
+.lr-date { font-family: var(--f-mono); font-size: 0.92rem; color: var(--c-bronze); }
+.lr-type { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-ink-3); }
+.lr-title { font-family: var(--f-serif); font-size: clamp(1.15rem, 1.8vw, 1.4rem); line-height: 1.25; color: var(--c-ink); }
+.lr-venue { font-size: 0.9rem; color: var(--c-ink-2); margin-top: 9px; }
+.lr-role { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.02em; color: var(--c-ink-3); margin-top: 9px; line-height: 1.5; }
+.lr-status { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-bronze); border: 1px solid var(--c-bronze-dk); padding: 4px 9px; white-space: nowrap; align-self: start; }
+.ledger-note { margin-top: 24px; font-family: var(--f-mono); font-size: 0.74rem; color: var(--c-ink-3); letter-spacing: 0.02em; }
+
+/* Section 2 — Research Pipeline: ongoing investigations */
+.pipeline-list { display: flex; flex-direction: column; gap: 1px; background: var(--c-line); border: 1px solid var(--c-line); }
+.pipeline-item { background: var(--c-bg-raise); padding: clamp(26px, 2.8vw, 40px); }
+.pl-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+.pl-status { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-bronze); border: 1px solid var(--c-bronze-dk); padding: 3px 9px; white-space: nowrap; }
+.pl-head h3 { font-family: var(--f-serif); font-size: clamp(1.2rem, 1.9vw, 1.55rem); line-height: 1.22; color: var(--c-ink); }
+.pl-desc { font-size: 0.95rem; color: var(--c-ink-2); line-height: 1.62; max-width: 82ch; }
+.pl-foot { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 20px; align-items: center; }
+.pl-feeds { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.03em; color: var(--c-ink-3); }
+.pl-focus { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-bronze); margin-bottom: 22px; }
+
+/* =====================================================================
+   BLUEPRINT SVG SCHEMATICS — retint the provided infographics into glowing
+   monochrome engineering diagrams (desaturated bronze + light grey).
+   Inline-SVG colour/stroke overrides (presentation attributes lose to CSS).
+   ===================================================================== */
+.schematic-wrap { margin: clamp(36px, 5vh, 64px) auto 0; max-width: 920px; }
+.schematic { width: 100%; height: auto; display: block; filter: drop-shadow(0 0 10px rgba(184, 151, 102, 0.10)); }
+/* text classes */
+.schematic .gold { fill: #B89766 !important; }
+.schematic .cream { fill: #E2E2E2 !important; }
+.schematic .muted { fill: #9DA1A7 !important; }
+/* panel fills -> transparent / faint so it reads as a wireframe on charcoal */
+.schematic rect[fill="#100f12"] { fill: transparent !important; }
+.schematic rect[fill="#17171b"], .schematic rect[fill="#1b1813"], .schematic rect[fill="#141417"] { fill: rgba(255, 255, 255, 0.018) !important; }
+.schematic rect[fill="#1c1c21"] { fill: rgba(184, 151, 102, 0.06) !important; }
+/* gold solids (ribbon, padlock) -> bronze */
+.schematic rect[fill="#C2A14D"], .schematic circle[fill="#C2A14D"], .schematic path[fill="#C2A14D"] { fill: #B89766 !important; }
+/* structural hairlines + borders -> faint bronze gridlines */
+.schematic [stroke="#2a2a30"], .schematic [stroke="#2c2c33"], .schematic [stroke="#2f2f36"], .schematic [stroke="#3a3324"] { stroke: rgba(184, 151, 102, 0.22) !important; }
+.schematic [stroke="#C2A14D"] { stroke: #B89766 !important; }
+/* the "blocked" fault markers -> muted, de-saturated (no startup colour) */
+.schematic [stroke="#9a5048"], .schematic [stroke="#C9594B"] { stroke: #9c7268 !important; }
+
+/* =====================================================================
+   FOUNDER PORTRAIT (about.html) — severe, desaturated, sharp 1px, no shadow
+   ===================================================================== */
+.founder-layout { display: grid; grid-template-columns: 260px 1fr; gap: clamp(36px, 5vw, 72px); align-items: start; }
+.founder-portrait { position: sticky; top: 112px; }
+.founder-photo {
+  display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center 20%;
+  border: 1px solid rgba(184, 151, 102, 0.35);
+  filter: grayscale(1) contrast(1.03) brightness(0.97);
+  /* deliberately no border-radius and no box-shadow */
+}
+.founder-portrait-name { font-family: var(--f-serif); font-size: 1.2rem; color: var(--c-ink); margin-top: 18px; line-height: 1.2; }
+.founder-portrait-role { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-3); margin-top: 6px; }
+.founder-portrait .terminal-link { margin-top: 18px; font-size: 0.74rem; padding: 10px 14px; }
+.founder-narrative .founder-text:first-child { margin-top: 0; }
+.founder-narrative .cv { margin-top: 32px; }
+
+/* =====================================================================
+   ABOUT PAGE — restructured top half (global H2 sizing for all sections)
+   ===================================================================== */
+#mandate-standard .section-title, #principles .section-title,
+#founder .section-title, #presence .section-title {
+  font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06;
+}
+
+/* The Mandate & The Standard — white, 30/70 rows, dividers that draw in (like 'Bridging') */
+#mandate-standard { background: #FFFFFF; }
+#mandate-standard .container { max-width: none; }
+#mandate-standard .ms-row { display: grid; grid-template-columns: 3fr 7fr; gap: clamp(40px, 6vw, 90px); align-items: start; padding: clamp(34px, 5vh, 60px) 0; position: relative; }
+#mandate-standard .ms-row::after,
+#mandate-standard .ms-row:first-child::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; background: rgba(20, 22, 26, 0.16);
+  transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease);
+}
+#mandate-standard .ms-row::after { bottom: 0; }
+#mandate-standard .ms-row:first-child::before { top: 0; }
+#mandate-standard .ms-row.draw-in::after,
+#mandate-standard .ms-row.draw-in::before { transform: scaleX(1); }
+#mandate-standard .ms-title { font-family: var(--f-serif); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 500; color: var(--c-gold); line-height: 1.1; letter-spacing: -0.01em; }   /* gold row titles, like the 'Bridging' labels */
+#mandate-standard .ms-text { font-size: clamp(1rem, 1.25vw, 1.14rem); color: #1A1C20; line-height: 1.72; max-width: 74ch; }
+
+/* Foundational Principles — black, title + rule + 2x2 grid */
+#principles { background: #2E3047; }
+#principles .container { max-width: none; }
+#principles .section-title { color: var(--c-ink); }
+#principles .fp-divider { width: 100%; height: 1px; background: rgba(255, 255, 255, 0.16); margin: clamp(28px, 4vh, 48px) 0 clamp(40px, 5.5vh, 68px); }
+#principles .fp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+#principles .fp-title { font-family: var(--f-serif); font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 500; color: var(--c-ink); line-height: 1.2; margin-bottom: 14px; }
+#principles .fp-num { color: var(--c-gold); }
+#principles .fp-text { font-size: clamp(1rem, 1.2vw, 1.12rem); color: var(--c-ink-2); line-height: 1.7; max-width: 58ch; }
+
+/* The Founder — inverted to white (gold/bronze accents kept exactly) */
+#founder { background: #FFFFFF; padding-top: clamp(64px, 9vh, 120px); padding-bottom: clamp(64px, 9vh, 120px); }   /* REF spacing: top + bottom matched to #engagements / #euler-standard */
+#founder .section-title { color: #14161A; }
+#founder .founder-text { color: #1A1C20; }
+#founder .founder-portrait-name { color: #14161A; }
+#founder .founder-portrait-role { color: #5A5E64; }
+#founder .cv li { border-top-color: rgba(20, 22, 26, 0.16); }
+#founder .cv-val { color: #1A1C20; }
+
+/* =====================================================================
+   SECTION 3 — THE 3-PILLAR MODEL ARCHITECTURE: dark (black) full-bleed grid,
+   white / off-white text. Title forced onto a single line.
+   ===================================================================== */
+#services { background: var(--c-bg); }   /* solid: part of the sticky-reveal stack */
+#services .section-head { max-width: none; }                 /* let the title use full width */
+#services { background: #2E3047; padding-top: calc(var(--section-y) / 2); padding-bottom: calc(var(--section-y) / 2); }   /* gunmetal; top + bottom padding halved (−50%) */
+#services .section-title { color: var(--c-ink); white-space: nowrap; }   /* white title */
+/* The 3-Pillar title + 3-pillar card titles command more attention */
+#services .section-title, .pillar-section .section-title {
+  font-size: clamp(2.2rem, 4.6vw, 3.5rem); font-weight: 500; letter-spacing: -0.02em;
+}
+/* Services-page pillar titles enlarged to match the 'Ongoing Research' title */
+.pillar-section .section-title { font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1.06; white-space: nowrap; }   /* force single line */
+#services .fb-title { font-size: clamp(1.5rem, 2.3vw, 2rem); font-weight: 500; }
+#services .fb-grid { --fb-line: var(--c-line); }   /* light hairlines on black */
+/* Card top padding == the section title's top margin (clamp 64/9vh/120), doubling
+   the original vertical padding so cards stretch much taller. */
+#services .fb-col { background: transparent; padding-block: clamp(64px, 9vh, 120px); position: relative; transition: background .4s var(--ease), box-shadow .4s var(--ease); }
+#services .fb-col:hover { background: var(--c-bg-raise2); box-shadow: inset 0 0 0 1px var(--c-gold); }   /* dark bg pop + gold border, no lift */
+#services .fb-title { text-align: center; color: var(--c-gold); min-height: 2.6em; }   /* gold titles kept */
+#services .fb-text { color: var(--c-ink-2); }   /* light body on black */
+#services .fb-col .fb-text:first-of-type { flex-grow: 1; }   /* first paragraph absorbs slack -> 'How we work' + CTA bottom-align across the row */
+#services .fb-text strong { color: #FFFFFF; }
+#services .fb-col .link-quiet { color: var(--c-gold); }
+#services .fb-col .link-quiet:hover { color: #FFFFFF; }
+
+/* =====================================================================
+   HOMEPAGE — WHO WE ADVISE: black, gold subheaders, 3-Pillar-style grid.
+   ===================================================================== */
+#who-we-advise { background: #2E3047; }
+#who-we-advise .container { max-width: none; }   /* full-bleed gutter */
+#who-we-advise .wa-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; }   /* hard 50/50, identical to the 'Bridging' rows above — text starts at exactly 50% */
+#who-we-advise .section-title { color: var(--c-ink); font-size: clamp(2.2rem, 4.6vw, 3.5rem); font-weight: 500; letter-spacing: -0.015em; }   /* matches the homepage section titles */
+#who-we-advise .wa-list { border-top: 1px solid var(--c-line); }
+#who-we-advise .wa-item { padding: clamp(26px, 3.6vh, 44px) 0; border-bottom: 1px solid var(--c-line); }   /* thin divider between archetypes */
+#who-we-advise .wa-title { font-family: var(--f-serif); font-size: clamp(1.5rem, 2.3vw, 2rem); font-weight: 500; color: var(--c-gold); line-height: 1.2; margin-bottom: 12px; }   /* gold subheader */
+#who-we-advise .wa-text { font-size: clamp(1rem, 1.2vw, 1.12rem); color: var(--c-ink-2); line-height: 1.7; max-width: 72ch; }
+
+/* =====================================================================
+   SERVICES — THE ENGAGEMENT PROCESS: white, 30/70 split, numbered steps.
+   ===================================================================== */
+#engagement-process { background: #FFFFFF; }
+#engagement-process .container { max-width: none; }   /* full-bleed gutter, like the Ecosystem header */
+#engagement-process .ep-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 110px); align-items: start; }   /* 1fr 1fr — identical to the R&D Commitment split, so the dividing line aligns */
+#engagement-process .section-title { color: #14161A; font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; }   /* matches the Services pillar titles */
+#engagement-process .ep-steps { border-top: 0; }
+#engagement-process .ep-step { padding: clamp(26px, 3.6vh, 44px) 0; position: relative; }
+/* Dividers drawn left -> right on scroll, exactly like the homepage 'Bridging' rows (JS toggles .draw-in) */
+#engagement-process .ep-step::after,
+#engagement-process .ep-step:first-child::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; background: rgba(20, 22, 26, 0.16);
+  transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease);
+}
+#engagement-process .ep-step::after { bottom: 0; }
+#engagement-process .ep-step:first-child::before { top: 0; }
+#engagement-process .ep-step.draw-in::after,
+#engagement-process .ep-step.draw-in::before { transform: scaleX(1); }
+#engagement-process .ep-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 500; color: var(--c-gold); line-height: 1.2; margin-bottom: 12px; }   /* gold step titles */
+#engagement-process .ep-num { color: var(--c-gold); }   /* gold step number */
+#engagement-process .ep-text { font-size: clamp(1rem, 1.2vw, 1.12rem); color: #1A1C20; line-height: 1.7; max-width: 72ch; }
+
+/* =====================================================================
+   SECTION 2 — CHALLENGE & SOLUTION: white, full-bleed gutter width (mirrors
+   Hero/nav margins), deep-dark text, black dividers that draw in on scroll.
+   ===================================================================== */
+#challenge-solution { background: #FFFFFF; padding-bottom: 0; }   /* flush to Section 3 */
+#challenge-solution .container { max-width: none; }          /* mirror Hero/nav left+right gutter */
+#challenge-solution .section-title { color: #14161A; font-size: clamp(2.2rem, 4.6vw, 3.5rem); font-weight: 500; letter-spacing: -0.015em; }
+#challenge-solution .cs-label { color: var(--c-gold); font-size: clamp(1.5rem, 2.3vw, 2rem); font-weight: 500; }
+#challenge-solution .cs-body p { color: #1A1C20; }
+/* last row keeps its normal bottom padding (spacing matches the other rows) but
+   drops its bottom divider — no line borders the transition into Section 3 */
+#challenge-solution .cs-row:last-child::after { display: none; }
+/* Black dividers, drawn left -> right EACH time a row enters view (.draw-in, re-triggering) */
+/* three perfectly equal-height blocks: tallest row sets the height for all */
+#challenge-solution .cs-rows { border-top: 0; display: grid; grid-auto-rows: 1fr; }
+#challenge-solution .cs-row { border-bottom: 0; position: relative; }
+#challenge-solution .cs-row::after,
+#challenge-solution .cs-row:first-child::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; background: #2E3047;
+  transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease);
+}
+#challenge-solution .cs-row::after { bottom: 0; }
+#challenge-solution .cs-row:first-child::before { top: 0; }
+#challenge-solution .cs-row.draw-in::after,
+#challenge-solution .cs-row.draw-in::before { transform: scaleX(1); }
+
+/* =====================================================================
+   SECTION 4 — PARTNERS & PEDIGREE: clean off-white, borderless logo strips.
+   Uniform grayscale + muted opacity; full opacity (and colour) on hover.
+   ===================================================================== */
+/* Header pinned to the top, logo group pushed to the bottom (the "split").
+   Top padding matches the 3-Pillar section; bottom padding matches a full
+   section (var(--section-y), as the old Euler Standard section used). */
+#pedigree {
+  background: #2E3047;   /* matches the overall Services SECTION background (gunmetal) */
+  display: flex; flex-direction: column; min-height: auto;
+  padding-top: clamp(64px, 9vh, 120px);
+  padding-bottom: clamp(48px, 7.5vh, 100px);   /* bottom space reduced ~1/2 (was var(--section-y)) */
+}
+#pedigree .container { max-width: none; display: flex; flex-direction: column; }   /* full-bleed gutter width */
+/* Section header — title + intro, matching Section 2 typography (50/50 like cs-rows) */
+.pedigree-head { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; }
+.pedigree-head .section-title { color: #14161A; font-size: clamp(2.2rem, 4.6vw, 3.5rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.12; }   /* dark title on white */
+.pedigree-intro { font-size: clamp(1rem, 1.25vw, 1.12rem); color: #1A1C20; line-height: 1.72; }
+/* Stack the head so the intro sits below the label on the same left axis (was col 2 of a 2-col grid) */
+#pedigree .pedigree-head { grid-template-columns: 1fr; }
+#pedigree .pedigree-intro {
+  text-align: left;
+  padding-right: 0;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  max-width: none;
+  /* Typography copied from .thesis-lead — colour deliberately NOT copied */
+  font-family: var(--f-sans);
+  font-weight: 400;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.3;
+}
+/* --- Ecosystem dark-mode text mapping --- */
+#pedigree .pedigree-head .section-title { color: var(--c-gold); font-family: var(--f-mono); font-size: 0.72rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.2em; }   /* reverted to the standard ALL-CAPS gold label size */
+#pedigree .pedigree-intro { color: var(--c-ink-3); }                              /* matches the "To preserve market…" firewall subtext */
+#pedigree .logo-strip-overline { color: #FFFFFF; }                                /* sub-headers to pure white */
+#pedigree .logo-strip-block + .logo-strip-block { border-top: 1px solid rgba(255,255,255,0.10); }
+#pedigree .logo-strip-item img { filter: grayscale(1) brightness(0) invert(0.82); opacity: 0.82; }   /* invert marks so logos stay legible on the dark surface */
+#pedigree .logo-strip-item[data-fallback="AAVA"] img { height: 187.5px; max-width: 807.5px; }   /* AAVA — 1× (unchanged) */
+
+/* --- Unified vertical rhythm: identical subheading→logo gap in both rows --- */
+#pedigree .logo-strip-overline { margin-bottom: 2rem; }
+#pedigree .logo-strip { margin: 0; padding: 0; }
+#pedigree .logo-strip-item { min-height: 0; }
+
+/* --- Optical-weight multipliers on the 50px / 215px base --- */
+#pedigree .logo-strip-item[data-fallback="ENS"] img             { height: 50px; max-width: 215px; }   /* 1×   */
+#pedigree .logo-strip-item[data-fallback="CNRS"] img            { height: 65px; max-width: 280px; }   /* 1.3× */
+#pedigree .logo-strip-item[data-fallback="ERC"] img             { height: 75px; max-width: 323px; }   /* 1.5× (listed as "HEC") */
+#pedigree .logo-strip-item[data-fallback="Sorbonne"] img        { height: 60px; max-width: 258px; }   /* 1.2× */
+#pedigree .logo-strip-item[data-fallback="Polytechnique"] img   { height: 75px; max-width: 323px; }   /* 1.5× */
+#pedigree .logo-strip-item[data-fallback="CentraleSupélec"] img { height: 65px; max-width: 280px; }   /* 1.3× */
+#pedigree .logo-strip-item[data-fallback="ETH Zürich"] img      { height: 45px; max-width: 194px; }   /* 0.9× */
+#pedigree .logo-strip-item[data-fallback="Caan"] img            { height: 50px; max-width: 215px; }   /* 1×   */
+#pedigree .logo-strip-item[data-fallback="Clius"] img           { height: 40px; max-width: 172px; }   /* 0.8× */
+#pedigree .logo-strip-item[data-fallback="Hashlock"] img        { height: 60px; max-width: 258px; }   /* 1.2× */
+#pedigree .logo-strip-item[data-fallback="Security4Web3"] img   { height: 75px; max-width: 323px; }   /* 1.5× */
+#pedigree .logo-strip-item[data-fallback="ChainAware"] img      { height: 60px; max-width: 258px; }   /* 1.2× */
+#pedigree .logo-strip-item[data-fallback="ESILV"] img           { height: 75px; max-width: 323px; }   /* 1.5× */
+.pedigree-logos { margin-top: clamp(72px, 10.5vh, 138px); }   /* gap increased 1.5x */
+/* Light-surface logo treatment (default): dark grayscale marks legible on white; gold overline kept */
+.pedigree-logos .logo-strip-block:last-child { padding-bottom: 0; }   /* section padding-bottom is the only space below */
+.logo-strip-block { padding: clamp(38px, 5.5vh, 66px) 0; }
+.logo-strip-block + .logo-strip-block { border-top: 1px solid rgba(20, 22, 26, 0.08); }
+/* Kicker sized + coloured to match the 3-Pillar card titles (gold) */
+/* matches the Section 3 card titles (serif, weight 500, gold) — not uppercased */
+.logo-strip-overline {
+  font-family: var(--f-serif); font-size: clamp(1.5rem, 2.3vw, 2rem); font-weight: 500;
+  letter-spacing: -0.01em; color: var(--c-gold); margin-bottom: clamp(28px, 3.8vh, 44px);
+}
+.logo-strip {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: clamp(2rem, 4vw, 3.5rem);   /* min breathing room; space-between distributes across the wide row */
+}
+.logo-strip-item { display: inline-flex; align-items: center; min-height: 52px; }
+/* Anchor wrapper must not disturb flex alignment / vertical centring */
+.logo-strip-item > a { display: flex; align-items: center; text-decoration: none; line-height: 0; }
+.logo-strip-item img {
+  height: 50px; width: auto; max-width: 215px; object-fit: contain; display: block;   /* ~32% larger */
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: opacity .4s var(--ease), filter .4s var(--ease);
+}
+.logo-strip-item:hover img { opacity: 1; }
+/* A couple of partner logos are light-coloured and would otherwise disappear on
+   the light strip — darken just those so the row stays uniform and legible. */
+.logo-strip-item[data-fallback="Clius"] img,
+.logo-strip-item[data-fallback="AAVA"] img { filter: grayscale(100%) brightness(0.42) contrast(1.25); }
+/* graceful text fallback if a logo file is absent (e.g. ERC) */
+.logo-strip-item.logo-missing img { display: none; }
+.logo-strip-item.logo-missing::after {
+  content: attr(data-fallback);
+  font-family: var(--f-serif); font-size: 1.05rem; color: #3A3D42; letter-spacing: 0.01em; white-space: nowrap;
+}
+
+/* ----------------------------- REVEAL ANIMATIONS ----------------------------- */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-line { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(10px); transition: clip-path .9s var(--ease), opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal-line.in { opacity: 1; clip-path: inset(0 0 -2% 0); transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-line { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
+  .hero-light { display: none; }
+  /* dividers shown statically, no draw animation */
+  #challenge-solution .cs-row::after, #challenge-solution .cs-row::before,
+  #mandate-standard .ms-row::after, #mandate-standard .ms-row::before,
+  #euler-standard .es-step::after, #euler-standard .es-step::before { transform: none !important; transition: none !important; }
+}
+
+/* ----------------------------- RESPONSIVE ----------------------------- */
+/* Full-bleed grids stack to a single column on tablet/mobile; the vertical
+   divider becomes a horizontal one so the grid lines stay continuous. */
+@media (max-width: 980px) {
+  .fb-grid--3, .fb-grid--2 { grid-template-columns: 1fr; }
+  .fb-col + .fb-col { border-left: 0; border-top: 1px solid var(--fb-line); }
+}
+
+/* Collapse the primary nav into the hamburger before the 7-item menu (after adding
+   'Events') can collide with the logo on medium/tablet widths. Raised from 960px. */
+@media (max-width: 1080px) {
+  .site-nav { display: none; }
+  .nav-toggle { display: flex; }
+}
+
+@media (max-width: 960px) {
+  /* Services split hero: relax the rigid 50/50 + stack the pillar cards */
+  .page-hero.page-hero--split, .hero.hero--split { height: auto; min-height: 0; }
+  .hero-top-half { height: auto; min-height: 64vh; padding: 120px 0 56px; }
+  .hero-pillars { height: auto; grid-template-columns: 1fr; }
+  .hero-pillar { min-height: 120px; }
+  .hero-pillar + .hero-pillar { border-left: 0; border-top: 1px solid rgba(20, 22, 26, 0.16); }
+  .serve-strip-row { grid-template-columns: 1fr 1fr; }
+  #serve .serve-grid { grid-template-columns: 1fr; }   /* stack the 4 cards on mobile */
+  .wss-grid { grid-template-columns: 1fr; }   /* stack the audience sub-items */
+  #why-us .why-grid { grid-template-columns: 1fr; gap: 32px; }
+  #segments .seg-grid { grid-template-columns: 1fr; }   /* stack the 4 segment cards */
+  .svc-grid { grid-template-columns: 1fr; }   /* stack the 3 service cards */
+  .svc-card { height: auto; }                 /* size to content on touch (no hover) */
+  .svc-card-body { justify-content: flex-start; }
+  .svc-card-menu { opacity: 1 !important; max-height: 400px !important; transform: none !important; margin-top: 20px; }   /* touch: always show menu */
+  .routing-grid { grid-template-columns: 1fr; gap: 40px; }   /* stack the routing columns */
+  .boundary-lines { grid-template-columns: 1fr; gap: 18px; }
+  #digital-asset-engineering .track-grid { grid-template-columns: 1fr; gap: 36px; }
+  #euler-standard .es-step { grid-template-columns: 1fr; gap: 14px; }
+  .framing { grid-template-columns: 1fr 1fr; }
+  .founder { grid-template-columns: 1fr; }
+  .founder-layout { grid-template-columns: 1fr; }
+  .founder-portrait { position: static; max-width: 240px; }
+  .alliance-split { grid-template-columns: 1fr; gap: 30px; }
+  .alliance-divider { width: 100%; height: 1px; }
+  .commercial-items { grid-template-columns: 1fr; gap: 22px; }
+  .logo-grid-academic { grid-template-columns: repeat(4, 1fr); }
+  .logo-grid-ecosystem { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 640px) {
+  .framing { grid-template-columns: 1fr; }
+  /* Footer stacks: logo above, text left-aligned */
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 30px; }
+  .footer-text { align-items: flex-start; text-align: left; }
+  .footer-nav, .footer-meta { justify-content: flex-start; }
+  .footer-logo-img { width: 320px; max-width: 80vw; }
+  .trust-bar-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .cv li { grid-template-columns: 1fr; gap: 8px; }
+  .hero, .page-hero { min-height: 92vh; }
+  .logo-grid-academic { grid-template-columns: repeat(3, 1fr); }
+  .logo-grid-ecosystem { grid-template-columns: repeat(3, 1fr); }
+  .ledger-row { grid-template-columns: 1fr; gap: 12px; }
+  .lr-status { justify-self: start; }
+  .legal-citation { font-size: 0.6rem; }
+  .fb-col { padding: clamp(24px, 7vw, 40px); }
+  .cs-row { grid-template-columns: 1fr; gap: 10px; padding: 26px 0; }
+  #services .section-title, .pillar-section .section-title { white-space: normal; }   /* allow wrap on small screens */
+  #challenge-solution .cs-rows { grid-auto-rows: auto; }   /* don't force equal heights when stacked */
+  #engagements .eng-row { grid-template-columns: 1fr; gap: 16px; }   /* stack engagement rows */
+  #engagements.eng-compact .eng-row, #engagements.eng-compact .eng-row--wide, #presence.eng-compact .eng-row { grid-template-columns: 1fr; gap: 16px; }   /* keep the compact Workshops + Presence layout stacked on mobile */
+  #engagements .eng-row > .lr-status { justify-self: start; }   /* status pill left-aligned when stacked */
+  .pedigree-head { grid-template-columns: 1fr; gap: 16px; }
+  #research-areas .ra-split { grid-template-columns: 1fr; gap: 30px; }   /* stack header above accordion */
+  #rd-commitment .rd-split { grid-template-columns: 1fr; gap: 24px; }
+  #engagement-process .ep-split { grid-template-columns: 1fr; gap: 28px; }
+  #who-we-advise .wa-split { grid-template-columns: 1fr; gap: 28px; }
+  #mandate-standard .ms-row { grid-template-columns: 1fr; gap: 14px; }
+  #principles .fp-grid { grid-template-columns: 1fr; gap: 28px; }
+  .logo-strip { justify-content: flex-start; gap: 1.8rem 2.2rem; }
+  .logo-strip-item img { height: 40px; max-width: 160px; }
+}
+
+/* Focus visibility */
+a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible { outline: 2px solid var(--c-bronze); outline-offset: 3px; }
+
+/* =====================================================================
+   HOMEPAGE — Who-we-serve routing strip (minimalist, dark, divided).
+   ===================================================================== */
+.serve-strip { background: var(--c-bg); border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
+.hero .serve-strip { position: absolute; left: 0; bottom: 0; width: 100%; z-index: 3; border-bottom: 0; }   /* pinned to the bottom edge of the 100vh hero */
+.serve-strip-row { display: grid; grid-template-columns: repeat(4, 1fr); }
+.serve-link { display: flex; align-items: center; justify-content: center; text-align: center; padding: clamp(18px, 2.6vh, 32px) clamp(14px, 1.6vw, 26px); font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; color: var(--c-ink-3); border-left: 1px solid var(--c-line); transition: color .3s var(--ease), background .3s var(--ease); }
+.serve-link::after { display: none; }
+.serve-link:first-child { border-left: 0; }
+.serve-link:hover { color: var(--c-gold); background: var(--c-bg-raise); }
+
+/* =====================================================================
+   WHO WE SERVE PAGE — four archetype rows (dark, gold titles).
+   ===================================================================== */
+#serve { background: var(--c-bg); }
+#serve .container { max-width: none; }
+/* Balanced 2x2 grid — all four cards equal width + equal height */
+#serve .serve-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; border-top: 1px solid var(--c-line); border-left: 1px solid var(--c-line); }
+#serve .serve-card { display: flex; flex-direction: column; gap: 16px; padding: clamp(32px, 4vw, 64px); border-right: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); scroll-margin-top: 120px; }
+#serve .serve-title { font-family: var(--f-serif); font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 500; color: var(--c-gold); line-height: 1.18; }
+#serve .serve-text { font-size: clamp(1.05rem, 1.35vw, 1.2rem); color: var(--c-ink-2); line-height: 1.7; max-width: 60ch; }
+
+/* =====================================================================
+   WHO WE ARE — The Euler Standard: black, three sequential steps.
+   ===================================================================== */
+#euler-standard { background: #2E3047; padding-top: clamp(64px, 9vh, 120px); padding-bottom: clamp(64px, 9vh, 120px); }   /* REF spacing: top + bottom matched to #engagements 'Institutional Presence' */
+#euler-standard .container { max-width: none; }
+#euler-standard .section-title { color: var(--c-ink); font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; }   /* size/weight matched to #engagements 'Institutional Presence' title */
+#euler-standard .es-steps { margin-top: clamp(40px, 6vh, 80px); }
+#euler-standard .es-step { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: clamp(32px, 5vh, 64px) 0; align-items: start; position: relative; }   /* 1fr 1fr — body text starts at 50%, aligned with 'What Drives Us' */
+/* Dividers drawn left -> right on scroll, exactly like 'What Drives Us' (JS toggles .draw-in) */
+#euler-standard .es-step::after,
+#euler-standard .es-step:first-child::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; background: rgba(255, 255, 255, 0.16);
+  transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease);
+}
+#euler-standard .es-step::after { bottom: 0; }
+#euler-standard .es-step:first-child::before { top: 0; }
+#euler-standard .es-step.draw-in::after,
+#euler-standard .es-step.draw-in::before { transform: scaleX(1); }
+#euler-standard .es-step:last-child::after { display: none; }   /* no trailing divider on the last item */
+#euler-standard .es-step:last-child { padding-bottom: 0; }   /* zero space before the next section */
+#euler-standard .es-title { font-family: var(--f-serif); font-size: clamp(2rem, 3vw, 3rem); font-weight: 400; color: var(--c-gold); line-height: 1.3; }   /* type ramp copied from .thesis-lead + .thesis-gold (homepage 'AI made quantitative models a commodity') */
+#euler-standard .es-text { font-size: clamp(1rem, 1.25vw, 1.16rem); color: var(--c-ink-2); line-height: 1.72; max-width: 72ch; }
+
+/* =====================================================================
+   HOMEPAGE — Element 1: Positioning statement (left-aligned, hairline above).
+   ===================================================================== */
+.positioning { border-top: 1px solid var(--c-line); }
+.block-eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: clamp(28px, 4vh, 48px); }
+.positioning-line { font-family: var(--f-serif); font-size: clamp(1.9rem, 4vw, 3.2rem); color: var(--c-ink); line-height: 1.16; letter-spacing: -0.012em; max-width: 24ch; }
+.positioning-sub { margin-top: clamp(28px, 4vh, 40px); font-size: clamp(1.05rem, 1.3vw, 1.2rem); color: var(--c-ink-3); line-height: 1.6; max-width: 60ch; }
+
+/* =====================================================================
+   HOMEPAGE — Element 3: Proof-of-method slot (reusable featured block).
+   ===================================================================== */
+.proof { border-top: 1px solid var(--c-line); }
+.proof-card { max-width: 72ch; }
+.proof-headline { font-family: var(--f-serif); font-size: clamp(1.8rem, 3.4vw, 2.8rem); color: var(--c-ink); line-height: 1.2; letter-spacing: -0.01em; margin: 22px 0 24px; max-width: 22ch; }
+.proof-summary { font-size: clamp(1.05rem, 1.3vw, 1.2rem); color: var(--c-ink-3); line-height: 1.65; max-width: 62ch; }
+.proof-attr { margin-top: 18px; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-3); }
+.proof-link { margin-top: clamp(28px, 4vh, 40px); }
+.proof-link .link-quiet { color: var(--c-gold); }
+.proof-link .link-quiet:hover { color: var(--c-bronze-dk); }
+
+/* =====================================================================
+   HOMEPAGE — 'Why Us': 3 scannable columns with gold rules + titles.
+   ===================================================================== */
+#why-us .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(32px, 4vw, 72px); }
+#why-us .why-item { padding-top: 22px; border-top: 2px solid var(--c-gold); }
+#why-us .why-title { font-family: var(--f-serif); font-size: clamp(1.35rem, 1.9vw, 1.7rem); font-weight: 500; color: var(--c-gold); margin-bottom: 14px; line-height: 1.2; }
+#why-us .why-text { font-size: clamp(1rem, 1.2vw, 1.12rem); color: var(--c-ink-2); line-height: 1.65; }
+
+/* =====================================================================
+   WHO WE SERVE — uniform 4-card buyer-persona grid (2x2, equal height).
+   ===================================================================== */
+#segments { background: var(--c-bg); }
+#segments .container { max-width: none; }
+#segments .seg-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; border-top: 1px solid var(--c-line); border-left: 1px solid var(--c-line); }
+#segments .seg-card { display: flex; flex-direction: column; gap: clamp(14px, 1.6vh, 22px); padding: clamp(32px, 3.5vw, 60px); border-right: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); scroll-margin-top: 120px; transition: background .35s var(--ease); }
+#segments .seg-card:hover { background: var(--c-bg-raise); }
+#segments .seg-who { font-family: var(--f-serif); font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 500; color: var(--c-gold); line-height: 1.18; }
+#segments .seg-trigger { font-size: clamp(1.05rem, 1.35vw, 1.22rem); color: var(--c-ink); line-height: 1.5; }
+#segments .seg-meta { display: flex; flex-direction: column; gap: 4px; }
+#segments .seg-label { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-bronze); }
+#segments .seg-value { font-size: 0.98rem; color: var(--c-ink-2); line-height: 1.55; }
+#segments .seg-route { margin-top: auto; padding-top: 10px; font-family: var(--f-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--c-bronze-dk); transition: color .3s var(--ease); }
+#segments .seg-card:hover .seg-route { color: var(--c-gold); }
+
+/* =====================================================================
+   WHO WE SERVE — two large audience sections (dark + white), gold titles.
+   ===================================================================== */
+.wss-section--dark { background: var(--c-bg); }
+.wss-section--light { background: #FFFFFF; }
+.wss-section .container { max-width: none; }
+.wss-section .section-title { font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; margin-bottom: clamp(40px, 6vh, 80px); }
+.wss-section--dark .section-title { color: var(--c-ink); }
+.wss-section--light .section-title { color: #14161A; }
+.wss-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; border-top: 1px solid var(--c-line); border-left: 1px solid var(--c-line); }
+.wss-card { display: flex; flex-direction: column; gap: 16px; padding: clamp(32px, 4vw, 64px); border-right: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); scroll-margin-top: 120px; }
+.wss-title { font-family: var(--f-serif); font-size: clamp(1.6rem, 2.6vw, 2.3rem); font-weight: 500; color: var(--c-gold); line-height: 1.18; }
+.wss-text { font-size: clamp(1.05rem, 1.35vw, 1.2rem); line-height: 1.7; }
+.wss-section--dark .wss-text { color: var(--c-ink-2); }
+/* light section: dark borders + dark body text (gold titles kept) */
+.wss-section--light .wss-grid { border-top-color: rgba(20, 22, 26, 0.16); border-left-color: rgba(20, 22, 26, 0.16); }
+.wss-section--light .wss-card { border-right-color: rgba(20, 22, 26, 0.16); border-bottom-color: rgba(20, 22, 26, 0.16); }
+.wss-section--light .wss-text { color: #1A1C20; }
+
+/* =====================================================================
+   EVENTS PAGE — Institutional Presence: white surface, 4-column rows,
+   black text, gold accents kept. (mirrors the dark Workshops list).
+   ===================================================================== */
+#presence { background: #FFFFFF; padding-top: clamp(64px, 9vh, 120px); padding-bottom: clamp(64px, 9vh, 120px); }
+#presence .container { max-width: none; }
+#presence .section-title { color: #14161A; font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.015em; line-height: 1.06; }
+#presence .eng-rows { position: relative; }
+#presence .eng-row { display: grid; grid-template-columns: minmax(110px, 0.7fr) minmax(150px, 1fr) 2.6fr minmax(110px, auto); gap: clamp(20px, 3vw, 56px); align-items: start; padding: clamp(30px, 4.5vh, 52px) 0; position: relative; }
+/* dark hairline dividers, drawn left -> right on scroll */
+#presence .eng-row::after,
+#presence .eng-row:first-child::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; background: rgba(20, 22, 26, 0.16);
+  transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease);
+}
+#presence .eng-row::after { bottom: 0; }
+#presence .eng-row:first-child::before { top: 0; }
+#presence .eng-row.draw-in::after,
+#presence .eng-row.draw-in::before { transform: scaleX(1); }
+#presence .eng-row:last-child::after { display: none; }
+#presence .eng-meta { display: flex; flex-direction: column; gap: 8px; }
+#presence .eng-date { font-family: var(--f-mono); font-size: clamp(1.1rem, 1.5vw, 1.4rem); letter-spacing: 0.04em; color: var(--c-gold); }   /* gold matched to Workshops 'May 2026' */
+#presence .eng-type { font-family: var(--f-mono); font-size: clamp(0.8rem, 1vw, 0.92rem); letter-spacing: 0.16em; text-transform: uppercase; color: #5A5E64; }
+#presence .eng-logo-cell { align-self: start; }
+#presence .eng-logo { height: 58px; width: auto; max-width: 220px; object-fit: contain; filter: grayscale(100%); opacity: 0.75; }
+#presence .eng-content { display: flex; flex-direction: column; gap: 10px; }
+#presence .eng-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 500; color: #14161A; line-height: 1.2; }
+#presence .eng-venue { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.04em; color: #5A5E64; }
+#presence .eng-role { font-size: clamp(1rem, 1.25vw, 1.12rem); color: #1A1C20; line-height: 1.7; margin-top: 4px; }
+#presence .eng-row > .lr-status { justify-self: end; align-self: start; }   /* gold badge kept */
+#presence .eng-logo-cell.logo-missing::after { color: #5A5E64; }
+
+/* =====================================================================
+   SERVICES — Independence Boundary band + Practice 1 (flagship) + Practice 2.
+   ===================================================================== */
+.boundary-band { background: var(--c-bg); border-top: 1px solid var(--c-bronze-dk); border-bottom: 1px solid var(--c-bronze-dk); padding: clamp(40px, 6vh, 76px) 0; }
+.boundary-band .container { max-width: none; }
+.boundary-eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: clamp(20px, 3vh, 34px); }
+.boundary-lines { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 72px); }
+.boundary-line { font-family: var(--f-serif); font-size: clamp(1.2rem, 2vw, 1.7rem); color: var(--c-ink); line-height: 1.3; position: relative; padding-left: 24px; }
+.boundary-line::before { content: ""; position: absolute; left: 0; top: 0.4em; width: 9px; height: 9px; background: var(--c-gold); }
+
+/* Practice eyebrow + flagship trigger */
+.practice-eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 18px; }
+.practice-trigger { font-family: var(--f-serif); font-size: clamp(1.3rem, 2.2vw, 1.95rem); color: var(--c-ink); line-height: 1.3; max-width: 34ch; margin: 22px auto 0; }
+
+/* Practice 2 — two buyer-type tracks (contained, visually secondary) + firewall note */
+#digital-asset-engineering { padding-bottom: clamp(80px, 10vh, 140px); }
+#digital-asset-engineering .track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 5vw, 90px); border-top: 1px solid rgba(20, 22, 26, 0.16); padding-top: clamp(40px, 5vh, 64px); }
+#digital-asset-engineering .track-head { font-family: var(--f-serif); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 500; color: #14161A; margin-bottom: 22px; }
+#digital-asset-engineering .track-who { display: block; font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-bronze-dk); margin-top: 7px; }
+#digital-asset-engineering .track-list { list-style: none; margin: 0; padding: 0; }
+#digital-asset-engineering .track-list li { padding: 14px 0; border-bottom: 1px solid rgba(20, 22, 26, 0.10); font-size: clamp(1rem, 1.2vw, 1.12rem); color: #1A1C20; line-height: 1.5; }
+#digital-asset-engineering .track-list li strong { color: #14161A; font-weight: 600; }
+#digital-asset-engineering .firewall-note { margin-top: clamp(40px, 5vh, 64px); font-family: var(--f-mono); font-size: 0.82rem; letter-spacing: 0.04em; color: var(--c-bronze-dk); border-left: 2px solid var(--c-gold); padding-left: 16px; }
+
+/* =====================================================================
+   HOMEPAGE OVERHAUL — What Euler Is / Services 3-box / Solutions matrix.
+   ===================================================================== */
+/* Hero — second subtext paragraph sits tighter under the first */
+.hero-sub--2 { margin-top: clamp(16px, 2vh, 22px); }
+
+/* =====================================================================
+   STICKY HERO REVEAL (homepage only) — the hero pins to the top of the
+   viewport while the solid intro section slides up over it like a curtain.
+   Scoped to #hero so the split heroes on Services/Events are untouched.
+   ===================================================================== */
+#hero.hero { position: sticky; top: 0; height: 100svh; min-height: 100svh; z-index: 1; background-color: var(--c-gunmetal); background-image: url('Images/hero_background.png'); background-size: cover; background-position: right center; background-repeat: no-repeat; justify-content: center; padding-top: clamp(160px, 26vh, 360px); padding-bottom: 90px; }   /* static hero image pinned right; gunmetal fallback; void kept left */
+/* Cinematic hero video + brand scrim */
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.hero-scrim { position: absolute; inset: 0; z-index: 1; background: rgba(46, 48, 71, 0.6); pointer-events: none; }   /* transparent #2E3047 brand layer over the ocean footage */
+#hero .hero-surface { display: none; }   /* hide the textured overlay so the hero reads as a flat solid tone */
+/* Every section after the hero must be opaque and stacked above it so the
+   pinned hero never bleeds through. Most already carry a solid background;
+   the two transparent ones are made solid below. */
+.hero ~ section { position: relative; z-index: 2; }
+.what-euler { z-index: 10; box-shadow: 0 -24px 60px rgba(0,0,0,0.5); }   /* the curtain: stacked above + soft lift over the hero (solid off-white bg + Keppel seam set in the Intro/About block) */
+.site-footer { position: relative; z-index: 2; background: var(--c-bg); }
+
+/* Intro / About — left edge aligned to the Ecosystem section title (gutter axis) */
+.what-euler { background: var(--c-offwhite); border-top: 2px solid var(--c-gold); padding-top: var(--edge-padding); padding-bottom: var(--edge-padding); }   /* curtain edge now gold (= Services title colour); top/bottom padding = left margin for a uniform inset */
+.what-euler .container { max-width: none; }   /* full-bleed gutter: shares the exact left axis as #pedigree title + hero */
+.we-lead { font-family: var(--f-serif); font-size: clamp(1.7rem, 3.4vw, 2.9rem); color: var(--c-gunmetal); line-height: 1.22; letter-spacing: -0.01em; max-width: none; }   /* no measure cap so the explicit <br /> breaks are the only line breaks */
+.we-sub { margin-top: clamp(28px, 4vh, 44px); font-size: clamp(1.05rem, 1.3vw, 1.2rem); color: var(--c-rhythm); line-height: 1.62; max-width: 64ch; }
+.we-signoff { margin-top: clamp(26px, 3.5vh, 40px); font-family: var(--f-serif); font-size: clamp(1.1rem, 1.6vw, 1.4rem); color: var(--c-rhythm); }
+.we-signoff strong { color: var(--c-rhythm); font-weight: 700; font-style: italic; }
+
+/* Sharpened Banner — full-width authoritative statement between intro and services */
+.sharp-banner { background: #3C3F58; padding-top: var(--edge-padding); padding-bottom: var(--edge-padding); }   /* synced to the Services Arsenic card tone; padding = the page left margin */
+.sharp-banner .container { max-width: none; }
+.sharp-text { font-family: var(--f-serif); font-weight: 400; font-size: clamp(1.7rem, 3.4vw, 2.9rem); color: #FFFFFF; line-height: 1.22; letter-spacing: -0.01em; max-width: 52ch; margin-left: auto; text-align: right; padding-right: var(--edge-padding); }   /* typography matches .we-lead; colour intentionally left white */
+
+/* Services — 3-card interactive grid.
+   Fixed-height cards: title centred by default; on hover the body re-centres as the
+   menu expands (title rides up, menu fades in below); the View button stays pinned. */
+.svc-section { border-top: 1px solid var(--c-line); }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: clamp(40px, 6vh, 72px); border-top: 1px solid var(--c-line); border-left: 1px solid var(--c-line); }
+.svc-card { display: flex; flex-direction: column; height: clamp(460px, 56vh, 560px); padding: clamp(34px, 3vw, 52px) clamp(34px, 3vw, 52px) clamp(40px, 4vw, 60px); border-right: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); overflow: hidden; background: linear-gradient(160deg, var(--c-outerspc) 0%, var(--c-arsenic) 100%); transition: all 0.3s ease; outline: none; }
+.svc-card:hover, .svc-card:focus-visible { background: #1A1B28; box-shadow: inset 0 0 0 2px var(--c-gold); }   /* bg = Contact slate; inset ring = 2px gold "border" without grid reflow */
+.svc-card-body { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: flex-start; }   /* titles start at the same top Y across all three cards */
+.svc-card-title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(1.45rem, 2vw, 1.95rem); color: var(--c-gold); line-height: 1.18; text-align: center; min-height: 2.36em; }   /* reserve 2 lines so the menu top aligns on one Y across all 3 cards */
+.svc-card-menu { list-style: none; margin: 0; padding: 0; opacity: 0; max-height: 0; overflow: hidden; transform: translateY(10px); transition: opacity .45s var(--ease), transform .45s var(--ease), max-height .55s var(--ease), margin-top .45s var(--ease); }
+.svc-card:hover .svc-card-menu, .svc-card:focus-within .svc-card-menu { opacity: 1; max-height: 360px; transform: none; margin-top: 22px; }
+.svc-card-menu li { padding: 9px 0; border-top: 1px solid rgba(255,255,255,0.14); font-size: 0.92rem; color: #FFFFFF; line-height: 1.4; cursor: pointer; transition: color 0.2s ease; }
+.svc-card-menu li:hover { color: var(--c-gold); }   /* snaps to the gold Services-title accent */
+.svc-card-menu li:first-child { border-top: 0; }
+.svc-card-btn { flex: 0 0 auto; margin-top: clamp(20px, 3vh, 30px); font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-gold); transition: color .3s var(--ease); }
+.svc-card-btn span { display: inline-block; transition: transform .3s var(--ease), color .3s var(--ease); }
+.svc-card:hover .svc-card-btn, .svc-card:focus-within .svc-card-btn { color: var(--c-gold); }   /* gold persists on static + hover */
+.svc-card:hover .svc-card-btn span, .svc-card:focus-within .svc-card-btn span { transform: translateX(4px); }
+.svc-firewall { margin: clamp(34px, 5vh, 54px) auto 0; max-width: 72ch; text-align: center; font-size: 0.9rem; color: var(--c-ink-3); line-height: 1.62; }
+
+/* Solutions — minimalist routing directory (By role / By topic), off-white footer-style */
+.routing-section { background: var(--c-offwhite); border-top: 1px solid rgba(46,48,71,0.12); padding-top: calc(var(--section-y) / 2); padding-bottom: calc(var(--section-y) / 2); }
+/* Share the exact left axis as the SERVICES title (full-bleed + identical inset) */
+.routing-section .container { max-width: none; padding-left: clamp(3rem, 5vw, 6rem); padding-right: clamp(3rem, 5vw, 6rem); }   /* synced to the Services top padding (half section-y) */
+.routing-section .block-eyebrow { color: var(--c-gold); }   /* reverted to standard section-header size (gold) */
+.routing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 8vw, 120px); margin-top: clamp(28px, 4vh, 48px); }
+.routing-head { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-gunmetal); padding-bottom: 16px; border-bottom: 1px solid rgba(46,48,71,0.18); }
+.routing-list { list-style: none; margin: 0; padding: 0; }
+.routing-list li { border-bottom: 1px solid rgba(46,48,71,0.12); }
+.routing-list a { display: block; padding: 9px 0; font-family: var(--f-serif); font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: var(--c-rhythm); transition: color .25s var(--ease), padding-left .25s var(--ease); }
+.routing-list a:hover { color: var(--c-gold); padding-left: 10px; }
+
+/* =====================================================================
+   LATEST INSIGHTS — sticky title + horizontally scrolling card rail
+   ===================================================================== */
+.insights-section { background: var(--c-bg); padding: clamp(4rem, 9vh, 8rem) 0; }
+/* Asymmetric: ~27% aside / rail. No right padding so cards bleed off-screen. */
+.insights-layout { display: grid; grid-template-columns: minmax(220px, 27%) 1fr; gap: clamp(2rem, 4vw, 4.5rem); align-items: start; padding-left: clamp(3rem, 5vw, 6rem); }
+
+.insights-aside { position: sticky; top: 140px; align-self: start; }
+
+/* Right column: nav arrows sit above the rail, flush to the page's right inset */
+.insights-main { display: flex; flex-direction: column; min-width: 0; }
+.insights-nav { align-self: flex-end; display: flex; gap: 0.75rem; margin-bottom: clamp(1.25rem, 2.5vw, 2rem); padding-right: clamp(3rem, 5vw, 6rem); }
+.insights-arrow { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; padding: 0; background: none; border: 1px solid rgba(255,255,255,0.14); border-radius: 2px; color: var(--c-ink-3); cursor: pointer; transition: color .25s var(--ease), border-color .25s var(--ease); }
+.insights-arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.insights-arrow:hover { color: var(--c-gold); border-color: var(--c-gold); }
+.insights-arrow:disabled { opacity: 0.3; cursor: default; }
+.insights-arrow:disabled:hover { color: var(--c-ink-3); border-color: rgba(255,255,255,0.14); }
+.insights-title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(2.4rem, 4.5vw, 4rem); line-height: 1.04; letter-spacing: -0.02em; color: var(--c-ink); margin: 0; }
+.insights-viewall { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: clamp(1.5rem, 3vw, 2.5rem); padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.25); font-family: var(--f-sans); font-size: 0.95rem; color: var(--c-ink-2); transition: color .25s var(--ease), border-color .25s var(--ease); }
+.insights-viewall span { display: inline-block; transition: transform .25s var(--ease); }
+.insights-viewall:hover { color: var(--c-gold); border-color: var(--c-gold); }
+.insights-viewall:hover span { transform: translateX(4px); }
+
+/* Rail: flex + overflow-x, scrollbar hidden, snap per card */
+.insights-rail { display: flex; gap: clamp(1.25rem, 2vw, 2rem); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding-bottom: 1.5rem; scrollbar-width: none; -ms-overflow-style: none; }
+.insights-rail::-webkit-scrollbar { display: none; }
+
+/* Card blends into the page — boundary is the hairline border alone */
+.insight-card { flex: 0 0 clamp(280px, 26vw, 380px); scroll-snap-align: start; display: flex; flex-direction: column; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px; text-decoration: none; transition: border-color .3s var(--ease), background .3s var(--ease); }
+.insight-card:hover { border-color: var(--c-gold); background: rgba(255,255,255,0.03); }
+
+/* Neutral charcoal placeholder — no blue cast; an <img> covers it when supplied */
+.insight-media { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.025) 55%, rgba(255,255,255,0.01) 100%); }
+.insight-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.insight-body { flex: 1; display: flex; flex-direction: column; padding: clamp(1.4rem, 2vw, 1.9rem); }
+.insight-tag { font-family: var(--f-mono); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 0.9rem; }
+.insight-headline { font-family: var(--f-serif); font-weight: 500; font-size: clamp(1.25rem, 1.6vw, 1.55rem); line-height: 1.22; color: var(--c-ink); margin: 0 0 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.insight-excerpt { font-family: var(--f-sans); font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.82); margin: 0 0 1.6rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.insight-cta { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(255,255,255,0.2); font-family: var(--f-sans); font-size: 0.9rem; font-weight: 500; color: var(--c-ink-2); transition: color .25s var(--ease), border-color .25s var(--ease); }
+.insight-cta span { display: inline-block; transition: transform .25s var(--ease); }
+.insight-card:hover .insight-cta { color: var(--c-gold); border-color: var(--c-gold); }
+.insight-card:hover .insight-cta span { transform: translateX(4px); }
+
+/* ---- Latest Insights: ported research "pipeline" cards ----
+   The research cards are white-surface fb-col cards; here they sit in the dark
+   horizontal rail. Give them a fixed rail width + white background, replicate the
+   pipeline card styling, and pin the collaborators footer to the bottom (margin-top:auto)
+   so cards stay aligned regardless of the truncated text length. */
+#insights .insights-rail .fb-col {
+  flex: 0 0 clamp(280px, 26vw, 380px); scroll-snap-align: start;
+  position: relative; height: auto; display: flex; flex-direction: column;
+  background: #FFFFFF; border: 1px solid rgba(255,255,255,0.10); border-radius: 2px;
+  padding: clamp(22px, 1.8vw, 30px); overflow: hidden;
+  transition: border-color .3s var(--ease);
+}
+#insights .insights-rail .fb-col:hover { border-color: var(--c-gold); }
+#insights .insights-rail .fb-col + .fb-col { border-left: 1px solid rgba(255,255,255,0.10); }   /* uniform card border, not the grid divider */
+#insights .pl-cover { width: 100%; height: 150px; object-fit: cover; display: block; margin-bottom: clamp(16px, 1.6vw, 22px); background: #ECECEC; }
+#insights .pl-badge { position: absolute; top: clamp(22px, 1.8vw, 30px); right: clamp(22px, 1.8vw, 30px); z-index: 2; width: max-content; white-space: nowrap; font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-gold); border: 1px solid var(--c-gold); background: rgba(11, 12, 14, 0.62); padding: 4px 9px; }
+#insights .pl-readmore { display: none; }   /* the floating "Read more" (dead link) is omitted on the compact home cards */
+#insights .fb-col .fb-title { font-family: var(--f-serif); font-size: clamp(1.15rem, 1.5vw, 1.4rem); font-weight: 500; color: var(--c-gold); line-height: 1.2; margin: 0 0 12px; }
+#insights .fb-col .fb-text { font-size: 0.86rem; line-height: 1.5; color: #1A1C20; margin: 0 0 16px; }
+#insights .pl-collab { margin-top: auto; padding-top: 4px; }
+#insights .pl-collab-label { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.04em; color: var(--c-gold); margin-bottom: 12px; }
+#insights .pl-collab-logos { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; }
+#insights .pl-collab-logos img { height: 26px; width: auto; max-width: 84px; object-fit: contain; filter: grayscale(1); opacity: 0.75; }
+#insights .pl-collab-logos img.bdf-logo { height: auto; width: auto; max-height: 58px; max-width: 190px; filter: none; opacity: 1; mix-blend-mode: multiply; }
+
+/* =====================================================================
+   COMMON QUESTIONS — asymmetric sticky title + hairline accordion
+   ===================================================================== */
+/* Light surface — identical palette to the Solutions directory */
+.faq-section { background: var(--c-offwhite); border-top: 1px solid rgba(46,48,71,0.12); padding: clamp(4rem, 9vh, 8rem) 0; }
+.faq-layout { display: grid; grid-template-columns: minmax(220px, 27%) 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; padding: 0 clamp(3rem, 5vw, 6rem); }
+
+.faq-aside { position: sticky; top: 140px; align-self: start; }
+.faq-title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(2.4rem, 4.5vw, 4rem); line-height: 1.04; letter-spacing: -0.02em; color: var(--c-gunmetal); margin: 0; }
+.faq-sub { margin-top: clamp(1rem, 2vw, 1.5rem); font-family: var(--f-sans); font-size: 1rem; line-height: 1.6; color: var(--c-rhythm); max-width: 30ch; }
+
+/* No boxes, no radii — separation is a single dark hairline per row */
+.faq-item { border-bottom: 1px solid rgba(46,48,71,0.12); }
+.faq-item:first-child { border-top: 1px solid rgba(46,48,71,0.12); }
+.faq-q { margin: 0; }
+.faq-trigger { display: flex; align-items: flex-start; justify-content: space-between; gap: clamp(1.5rem, 3vw, 3rem); width: 100%; padding: clamp(1.5rem, 2.6vw, 2.1rem) 0; background: none; border: 0; border-radius: 0; text-align: left; cursor: pointer; color: var(--c-gunmetal); transition: color .3s var(--ease); }
+.faq-q-text { font-family: var(--f-serif); font-weight: 500; font-size: clamp(1.15rem, 1.7vw, 1.5rem); line-height: 1.3; letter-spacing: -0.005em; }
+/* Icon inherits currentColor, so it makes the same dark → gold transition */
+.faq-trigger:hover, .faq-trigger[aria-expanded="true"] { color: var(--c-gold); }
+
+/* Minimalist +/− built from two rules; the vertical one collapses when open */
+.faq-icon { position: relative; flex: 0 0 auto; width: 16px; height: 16px; margin-top: 0.35em; }
+.faq-icon::before, .faq-icon::after { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: currentColor; transition: transform .35s var(--ease), opacity .35s var(--ease); }
+.faq-icon::after { transform: rotate(90deg); }
+.faq-trigger[aria-expanded="true"] .faq-icon::after { transform: rotate(0deg); opacity: 0; }
+
+/* Height animated via JS-set max-height.
+   NOTE: the panel is a sibling of the <h3>, NOT of the button — an adjacent
+   selector on .faq-trigger can never match it, so visibility is driven by
+   an .is-open class on .faq-item instead. */
+.faq-panel { overflow: hidden; max-height: 0; opacity: 0; transition: max-height .45s var(--ease), opacity .35s var(--ease); }
+.faq-item.is-open .faq-panel { opacity: 1; }
+.faq-panel-inner { padding: 0 clamp(2rem, 6vw, 6rem) clamp(1.5rem, 2.6vw, 2.1rem) 0; }
+.faq-panel-inner p { font-family: var(--f-sans); font-size: clamp(0.98rem, 1.1vw, 1.08rem); line-height: 1.75; color: rgba(46,48,71,0.82); margin: 0; }
+
+@media (max-width: 900px) {
+  .faq-layout { grid-template-columns: 1fr; gap: 2rem; padding: 0 clamp(1.5rem, 5vw, 3rem); }
+  .faq-aside { position: static; }
+  .faq-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+  .faq-sub { max-width: none; }
+  .faq-panel-inner { padding-right: 0; }
+}
+
+@media (max-width: 900px) {
+  .insights-layout { grid-template-columns: 1fr; gap: 2rem; padding-left: clamp(1.5rem, 5vw, 3rem); }
+  .insights-aside { position: static; }
+  .insights-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+  .insight-card { flex-basis: min(78vw, 340px); }
+}
+/* Grouped sub-headers inside the "By role" column (no divider beneath them) */
+.routing-list li.routing-subhead { border-bottom: 0; padding: 0.6rem 0 0.5rem; font-family: var(--f-mono); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); }
+.routing-list li.routing-subhead--gap { margin-top: 2rem; }
+
+/* =====================================================================
+   HOME THESIS — full-width display block (max 1400px, centred)
+   ===================================================================== */
+/* Tune the measure here: raise --thesis-max for longer lines at the same type size */
+:root { --thesis-max: 1400px; }
+/* Full-bleed escape hatch — the section needs no parent override today, but this
+   guarantees it can span edge-to-edge if a constrained wrapper is ever introduced. */
+.full-bleed { width: 100vw; max-width: 100vw; margin-left: 50%; transform: translateX(-50%); }
+/* Top space halved (was clamp(100px,15vh,180px)); the removed half is transferred
+   to the bottom, so the text shifts up while total section height is unchanged. */
+.thesis { width: 100%; background: var(--c-offwhite, #F8F8F8); padding: clamp(50px, 7.5vh, 90px) 0; }
+.thesis-wrap { width: 100%; max-width: var(--thesis-max); margin: 0 auto; padding: 0 clamp(1rem, 3vw, 2.5rem); text-align: left; }
+.thesis-lead { font-family: var(--f-sans); font-weight: 400; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.3; color: #1A1B28; margin: 0 0 clamp(2.5rem, 5vw, 4rem); max-width: none; text-wrap: pretty; }
+.thesis-gold { color: var(--c-gold); font-family: var(--f-serif); }
+.thesis-outro { font-family: var(--f-serif); font-weight: 400; font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1.08; letter-spacing: -0.015em; color: var(--c-gold); margin: 0; max-width: none; }
+
+/* ---- Thesis metric grid: 4 columns split by hairline rules ---- */
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: clamp(3.5rem, 7vw, 6rem) 0 0; padding: 0; border-top: 1px solid rgba(46,48,71,0.10); }
+.metric { padding: clamp(2rem, 3.5vw, 3rem) clamp(1rem, 2.5vw, 2.25rem); }
+/* Delicate dividers — faint, never harsh; inset so they read as rules, not borders */
+.metric + .metric { border-left: 1px solid rgba(46,48,71,0.10); }
+.metric-value { font-family: var(--f-serif); font-weight: 400; font-size: clamp(2.75rem, 5vw, 4.25rem); line-height: 1; letter-spacing: -0.02em; color: #23263A; margin: 0; font-variant-numeric: lining-nums; }
+.metric-label { margin: clamp(0.9rem, 1.6vw, 1.25rem) 0 0; font-family: var(--f-sans); font-weight: 500; font-size: 0.66rem; line-height: 1.5; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-rhythm); max-width: 22ch; }
+
+/* --- Stats band: dark surface matching the Services header (#2E3047) --- */
+#proof-metrics { background: #2E3047; padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(3rem, 6vw, 5rem); }
+/* Top padding is dark too, so the gap under the Services cards reads as one block */
+#proof-metrics .metric-value,
+#proof-metrics .metric-label { color: var(--c-offwhite); }
+/* Hairlines lifted to a subtle white so they stay visible on the dark ground */
+#proof-metrics .metric-grid { border-top-color: rgba(255,255,255,0.14); }
+#proof-metrics .metric + .metric { border-left-color: rgba(255,255,255,0.14); }
+
+@media (max-width: 900px) {
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .metric:nth-child(3) { border-left: 0; }                     /* first item of row 2 */
+  .metric:nth-child(n+3) { border-top: 1px solid rgba(46,48,71,0.10); }
+  #proof-metrics .metric:nth-child(n+3) { border-top-color: rgba(255,255,255,0.14); }
+}
+@media (max-width: 520px) {
+  .metric-grid { grid-template-columns: 1fr; }
+  .metric + .metric { border-left: 0; border-top: 1px solid rgba(46,48,71,0.10); }
+  #proof-metrics .metric + .metric { border-top-color: rgba(255,255,255,0.14); }
+  .metric-label { max-width: none; }
+}
+/* Keeps hyphenated terms intact — plain ASCII hyphens, no U+2011 (which font-fell-back and looked spaced) */
+.nb { white-space: nowrap !important; }
+/* Hand-ragged desktop line breaks — disabled so text reflows naturally on mobile */
+@media (max-width: 768px) {
+  .desktop-break { display: none; }
+}
+.text-gold { color: var(--c-gold); }
+
+/* Home — lock Ecosystem to the SERVICES eyebrow's left-axis (X) and top spacing */
+#pedigree { padding-top: clamp(3rem, 5vw, 6rem); }
+#pedigree .container { padding-left: clamp(3rem, 5vw, 6rem); padding-right: clamp(3rem, 5vw, 6rem); }
+
+/* Sovereign & Public Sector band — slim authority bridge between mandates and independence */
+.sovereign-band { background: #1A1B28; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); transition: background 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+.sovereign-band:hover { background: #2E3047; /* Matches the solid background of the Services section */ box-shadow: inset 0 0 0 1px var(--c-gold, #C7A962); border-color: transparent; }
+.sovereign-inner { max-width: 1300px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); }
+.sovereign-title { font-family: var(--f-mono); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 2.5rem; }   /* identical treatment to the SERVICES eyebrow */
+.sovereign-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem); }
+.sovereign-col { margin: 0; font-family: var(--f-sans); font-size: 0.95rem; line-height: 1.55; color: #D8D5CC; }
+.sovereign-lead { display: block; margin-bottom: 8px; font-size: 1.05rem; color: var(--c-gold); font-weight: 700; }
+.sovereign-link { display: inline-block; margin-top: 3rem; font-family: var(--f-sans); font-size: 1rem; font-style: normal; color: #C9A24B; border-bottom: 1px solid rgba(201,162,75,0.4); padding-bottom: 2px; text-decoration: none; transition: color 0.25s ease, border-color 0.25s ease; }
+.sovereign-link span { display: inline-block; transition: transform 0.25s ease; }
+.sovereign-link:hover { color: var(--c-gold); border-color: var(--c-gold); }
+.sovereign-link:hover span { transform: translateX(4px); }
+@media (max-width: 760px) { .sovereign-grid { grid-template-columns: 1fr; gap: 1.8rem; } }
+
+/* Service-page post-hero band — gold lead + white body */
+.gold-text-class { font-family: var(--f-serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 500; line-height: 1.3; color: var(--c-gold); margin-bottom: 2rem; }
+.reality-body { font-family: var(--f-sans); font-size: 1.25rem; font-weight: 400; line-height: 1.8; color: #FFFFFF; margin-bottom: 1.5rem; }
+.reality-body:last-child { margin-bottom: 0; }
+
+/* Inverted Fractional / Standing-Mandate section: card gradient bg + dark text → white */
+.daa-section.section-inverted { background: linear-gradient(160deg, var(--c-outerspc) 0%, var(--c-arsenic) 100%); }
+.daa-section.section-inverted .daa-macro,
+.daa-section.section-inverted .daa-body,
+.daa-section.section-inverted .daa-summary { color: #FFFFFF; }
+
+/* Service-page contact: padding −50% + typography synced to the post-hero band */
+.contact--service { padding-top: calc(var(--section-y) / 2); padding-bottom: calc(var(--section-y) / 2); }
+.contact--service .contact-title { font-family: var(--f-serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 500; color: var(--c-gold); }
+.contact--service .contact-lede { font-family: var(--f-sans); font-size: 1.25rem; font-weight: 400; line-height: 1.8; color: #FFFFFF; max-width: none; }
+/* Procedural note above the service CTA: deliberately quieter than .contact-lede (a footnote, not a headline). */
+.contact--service .contact-procurement {
+  font-family: var(--f-sans); font-size: 0.95rem; font-weight: 400; line-height: 1.65;
+  color: rgba(255,255,255,0.55); max-width: 64ch; margin: 2rem auto 2.25rem;
+}
+
+/* =====================================================================
+   DIGITAL ASSET ARCHITECTURE & RWA — sub-page (Zanders-style 2-col,
+   strictly on the Euler dark theme).
+   ===================================================================== */
+/* Hero + anchor nav — full-bleed gutter width + left-aligned, matching the homepage hero */
+.daa-hero { background: #1A1B28; padding-top: clamp(140px, 20vh, 220px); padding-bottom: clamp(40px, 6vh, 72px); }   /* unified with the section below — one seamless dark document */
+.daa-hero .container { max-width: none; text-align: left; padding-left: calc(var(--gutter) * 2); padding-right: calc(var(--gutter) * 2); }   /* expand to gutter, then doubled inset for luxurious outer margins */
+.daa-eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: clamp(20px, 3vh, 32px); }
+.daa-title { font-family: var(--f-serif); font-weight: 400; font-size: clamp(2.2rem, 5.6vw, 4.4rem); line-height: 1.05; letter-spacing: -0.015em; color: #FFFFFF; }
+.daa-anchors { display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 56px); margin-top: clamp(32px, 5vh, 56px); border-bottom: 4px solid #3C3F58; }   /* heavy structural divider in the lighter slate */
+.daa-anchors a { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-gold); padding-bottom: 18px; position: relative; transition: color .25s var(--ease); }
+.daa-anchors a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; background: var(--c-gold); transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
+.daa-anchors a:hover { color: var(--c-gold); }
+.daa-anchors a:hover::after { transform: scaleX(1); }
+.daa-macro { font-family: var(--f-sans); font-weight: 500; font-size: clamp(1.18rem, 1.6vw, 1.5rem); line-height: 1.5; color: var(--c-gunmetal); max-width: none; margin-bottom: clamp(28px, 4vh, 48px); }   /* full-width executive preamble — medium weight, slightly larger than body */
+
+/* Sticky-reveal hero: dark header + banner image fill 100vh and pin; content slides over */
+.daa-hero-wrap { position: sticky; top: 0; height: 100vh; width: 100%; display: flex; flex-direction: column; z-index: 0; overflow: hidden; }
+
+/* Post-hero reality band: must sit above the sticky hero-wrap stacking context */
+.reality-band { position: relative; z-index: 10; background: #1A1B28; }
+.daa-content { position: relative; z-index: 10; background: #ffffff; }   /* solid overlay so the pinned image never bleeds through */
+/* Banner absorbs the remaining height below the dark header */
+.daa-banner { flex: 1; width: 100%; min-height: 0; overflow: hidden; margin: 0; padding: 0; line-height: 0; background: #2E3047; }
+.daa-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
+
+/* Body sections — high-contrast inversion: off-white surface, gunmetal text, gold accents kept.
+   Wide gap pushes the right column's left edge onto one shared vertical axis across all 4 sections. */
+.daa-section { background: var(--c-offwhite); padding: clamp(56px, 8vh, 104px) 0; border-top: 1px solid rgba(46,48,71,0.14); scroll-margin-top: 110px; }
+.daa-hero + .daa-section { border-top: 0; }   /* hero (dark) meets the first inverted section cleanly */
+/* Full-container hairline between the light-zone sections. Matches the
+   THE WORK / WHAT YOU GET divider (1px rgba(46,48,71,0.2)) but spans the
+   whole container. Vertical balance comes from the equal section paddings
+   either side, so the rule sits centred in the gap. */
+.daa-rule { background: var(--c-offwhite); padding: 0 calc(var(--gutter) * 2); }
+.daa-rule span { display: block; height: 1px; background: rgba(46,48,71,0.2); }
+/* Suppress the full-bleed section border where an explicit rule now sits */
+.daa-rule + .daa-section, #dynamical-systems, #diligence-matrix, #lifecycle-check, #teardown-matrix { border-top: 0; }
+.daa-grid { max-width: none; padding-left: calc(var(--gutter) * 2); padding-right: calc(var(--gutter) * 2); }   /* doubled horizontal inset across all 4 sections */
+.daa-sec-title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(2.2rem, 3.6vw, 3.4rem); line-height: 1.18; letter-spacing: -0.01em; color: var(--c-gold); white-space: nowrap; margin-bottom: clamp(28px, 4vh, 48px); }   /* own full-width row above the columns */
+.daa-cols { display: grid; grid-template-columns: 1fr 2.5fr; gap: clamp(32px, 4vw, 80px); align-items: start; border-top: 1px solid rgba(46,48,71,0.2); padding-top: 3rem; padding-bottom: 2rem; }   /* left/right text tops share one Y-axis */
+.daa-summary { font-family: var(--f-sans); font-weight: 500; font-size: clamp(1.12rem, 1.5vw, 1.4rem); line-height: 1.5; color: var(--c-gunmetal); max-width: none; }   /* uncapped so the explicit <br /> breaks are the only breaks */
+.daa-right { display: flex; flex-direction: column; align-items: flex-end; gap: clamp(18px, 2.4vh, 26px); text-align: left; }   /* block stays anchored right; text reads naturally left-to-right */
+.daa-body { font-family: var(--f-sans); font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.75; color: var(--c-gunmetal); max-width: none; text-align: left; }   /* uncapped; reads left-to-right */
+.daa-link { margin-top: clamp(10px, 1.6vh, 18px); font-family: var(--f-mono); font-size: 0.82rem; letter-spacing: 0.06em; color: var(--c-gold); transition: color .25s var(--ease); }
+.daa-link span { display: inline-block; transition: transform .25s var(--ease); }
+.daa-link:hover { color: var(--c-bronze); }
+.daa-link:hover span { transform: translateX(5px); }
+
+/* Execution Grid — 3-column "threat / defense / arsenal" band below the text */
+.daa-exec { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; border-top: 1px solid rgba(46,48,71,0.14); padding-top: 2rem; margin-top: 3rem; }   /* dark separator: white would vanish on the off-white surface */
+.daa-exec-col { display: flex; flex-direction: column; }
+.daa-exec-title { font-family: var(--f-mono); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 14px; }   /* matches the "Services" eyebrow style */
+.daa-mission { font-family: var(--f-mono); font-weight: 400; font-size: 1.15rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 1rem; }   /* "Our Mission" label — same eyebrow style */
+.daa-exec-body { font-family: var(--f-sans); font-size: 0.95rem; line-height: 1.62; color: var(--c-rhythm); }   /* #707793 muted slate, matching the main body */
+
+/* The Diligence Matrix */
+.matrix-grid { display: flex; flex-direction: column; width: 100%; margin-top: 1rem; }
+.matrix-row { display: grid; grid-template-columns: 4fr 5fr; gap: clamp(32px, 4vw, 80px); border-top: 1px solid rgba(46,48,71,0.2); padding: 2.5rem 0; align-items: start; }
+.matrix-left { font-family: var(--f-serif); font-style: italic; font-size: clamp(1.1rem, 1.4vw, 1.35rem); color: var(--c-gunmetal); opacity: 0.85; line-height: 1.5; }
+.matrix-right { font-family: var(--f-sans); font-size: clamp(1.05rem, 1.25vw, 1.2rem); color: var(--c-gunmetal); line-height: 1.6; }
+.matrix-closing { padding-top: 0.5rem; font-family: var(--f-sans); font-size: clamp(1.2rem, 1.6vw, 1.4rem); font-weight: 500; color: var(--c-gunmetal); line-height: 1.5; }
+/* Column headers (gold all-caps, matching THE WORK / WHAT YOU GET) + separator line.
+   Border uses a dark hairline since this matrix sits on the off-white surface (a white
+   rgba(255,255,255,0.2) line would be invisible here). */
+.matrix-header { display: grid; grid-template-columns: 4fr 5fr; gap: clamp(32px, 4vw, 80px); padding-bottom: 1rem; border-bottom: 1px solid rgba(46,48,71,0.2); }
+.matrix-head-cell { font-family: var(--f-mono); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); }
+
+/* ---- Single-Sided Wall diagram (Home, above the Independence band) ---- */
+/* Single-sided wall — inside the SERVICES section, pushed down toward the cards */
+.services-wall { position: relative; margin-top: clamp(2.5rem, 6vw, 5rem); margin-bottom: clamp(1rem, 2vw, 2rem); }
+/* Vertical line drops from the centred badge, locked to the 50% card divider */
+.services-wall::after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); width: 1px; height: clamp(1.5rem, 3vw, 2.75rem); background: rgba(255,255,255,0.3); }
+.wall-inner { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: clamp(1rem, 3vw, 2.5rem); }
+.wall-col { flex: 1 1 0; text-align: center; white-space: nowrap; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); }   /* synced to the SERVICES eyebrow; equal flex basis keeps the badge dead-centre */
+.wall-badge { flex: 0 0 auto; white-space: nowrap; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.2em; color: var(--c-gold); font-weight: 700; padding: 0.55rem 1.4rem; border-radius: 999px; border: 1px solid rgba(199,169,98,0.4); background: #2E3047; }   /* SERVICES-title type, gold kept */
+@media (max-width: 600px) { .wall-col { font-size: 0.6rem; letter-spacing: 0.1em; } .wall-badge { font-size: 0.58rem; letter-spacing: 0.08em; padding: 0.45rem 0.9rem; } }
+
+/* SERVICES cards — centre all body text below the gold titles */
+.mandate-card { text-align: center; }
+.mandate-card-body, .mandate-card-sub, .mandate-card-mech, .mandate-card-btn { text-align: center; }
+
+/* Artifacts & Evidence — flagship display cases (matches SERVICES inset/eyebrow) */
+.artifacts-inner { padding-left: clamp(3rem, 5vw, 6rem); padding-right: clamp(3rem, 5vw, 6rem); }
+.artifacts-eyebrow { font-family: var(--f-mono); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: clamp(2rem, 4vh, 3rem); }
+.artifacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.artifact-card { display: flex; flex-direction: column; background: #1A1C28; border: 1px solid rgba(255,255,255,0.1); padding: clamp(1.8rem, 3vw, 2.8rem); text-decoration: none; transition: border-color 0.3s ease, transform 0.3s ease; }
+.artifact-card:hover { border-color: rgba(199,169,98,0.5); transform: translateY(-3px); }
+.artifact-tag { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; }
+.artifact-title { font-family: var(--f-serif); font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 500; line-height: 1.25; color: #FFFFFF; margin-bottom: 1rem; }
+.artifact-snippet { font-family: var(--f-sans); font-size: 0.95rem; line-height: 1.55; color: rgba(255,255,255,0.7); margin-bottom: 1.75rem; }
+.artifact-link { margin-top: auto; font-family: var(--f-sans); font-size: 0.9rem; font-weight: 500; color: var(--c-gold); transition: color 0.25s ease; }
+.artifact-link span { display: inline-block; transition: transform 0.25s ease; }
+.artifact-card:hover .artifact-link { color: #E6C66B; }
+.artifact-card:hover .artifact-link span { transform: translateX(4px); }
+@media (max-width: 760px) { .artifacts-grid { grid-template-columns: 1fr; } }
+
+/* ---- Mandate-card mechanism — the proof line, not a footnote ---- */
+.mandate-card-mech { margin-top: auto; padding-top: 2.5rem; font-size: 1.15rem; font-weight: 600; font-style: normal; line-height: 1.5; color: #FFFFFF; }
+
+/* ---- Numbered process strip (service pages) ---- */
+.process-strip { background: #1A1B28; padding: clamp(2.5rem, 5vh, 4rem) clamp(1.5rem, 5vw, 4rem); border-bottom: 1px solid rgba(255,255,255,0.1); }
+.process-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; }
+.process-step { display: flex; align-items: center; gap: 0.9rem; flex-shrink: 0; }
+.process-num { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 1px solid rgba(199,169,98,0.5); color: var(--c-gold); font-family: var(--f-mono); font-size: 0.95rem; flex-shrink: 0; }
+.process-label { font-family: var(--f-sans); font-size: clamp(0.9rem, 1.1vw, 1.05rem); color: rgba(255,255,255,0.85); letter-spacing: 0.01em; }
+.process-line { flex-grow: 1; height: 1px; background: rgba(255,255,255,0.2); margin: 0 clamp(1rem, 2.5vw, 2rem); }
+/* Pace signal beneath the process steps */
+.process-timeline { max-width: 1100px; margin: clamp(2rem, 3.5vw, 2.75rem) auto 0; text-align: center; font-family: var(--f-sans); font-size: clamp(0.95rem, 1.1vw, 1.05rem); color: rgba(255,255,255,0.72); }
+
+@media (max-width: 760px) {
+  .process-inner { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  .process-line { display: none; }
+  .process-timeline { text-align: left; }
+}
+
+@media (max-width: 880px) {
+  .matrix-row { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 0; }
+  .matrix-header { display: none; }   /* stacked rows don't align to 2 headers */
+  .daa-cols { grid-template-columns: 1fr; gap: clamp(20px, 4vh, 32px); }
+  .daa-exec { grid-template-columns: 1fr; gap: 2rem; }
+  .daa-summary { max-width: none; }
+  .daa-sec-title { white-space: normal; }   /* allow titles to wrap on small screens (no overflow) */
+  .daa-body { text-align: left; }
+  .daa-right { align-items: stretch; text-align: left; }   /* revert to left-aligned once stacked */
+}
+
+/* Institutional Banner CTA */
+.btn-gold-solid {
+  display: inline-block;
+  background-color: var(--c-gold);
+  color: #1A1B28;
+  font-family: var(--f-mono, monospace);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 18px 36px;
+  text-decoration: none;
+  border: 1px solid var(--c-gold);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.btn-gold-solid:hover {
+  background-color: transparent;
+  color: var(--c-gold);
+}
+
+/* =====================================================================
+   PRINT / PDF — one major section per page; keep brand colours & images.
+   ===================================================================== */
+@media print {
+  /* Render background colours and images exactly (Chrome/Safari + standard) */
+  *, *::before, *::after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* The fixed header must not overlap printed content */
+  .site-header { position: static; }
+  .nav-toggle, .mobile-nav { display: none !important; }
+
+  /* Each major section starts on a fresh page */
+  main > section { break-after: page; page-break-after: always; break-inside: avoid-page; }
+  main > section:last-child { break-after: auto; page-break-after: avoid; }   /* no trailing blank page */
+
+  /* Drop full-viewport hero heights so a hero doesn't waste a whole sheet */
+  .hero, .page-hero { min-height: 0; }
+}
+
+/* ============================ NEW MANDATES GRID ============================ */
+.mandates-section {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.mandates-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.mandate-card {
+  box-sizing: border-box;
+  padding: clamp(3rem, 4vw, 5rem); /* Slightly reduced padding to fit 3 columns */
+  background: linear-gradient(160deg, var(--c-outerspc) 0%, var(--c-arsenic) 100%);
+  border: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: border-color 0.3s ease;
+  position: relative;
+}
+
+/* Paragraph absorbs the free space so the link always sits on the card floor */
+.mandate-card .mandate-card-body { flex-grow: 1; margin-bottom: 0; }
+
+.mandate-link {
+  font-family: var(--f-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-gold, #C7A962);
+  font-weight: 600;
+  text-decoration: none;
+  text-align: right;
+  align-self: flex-end;
+  margin-top: 4rem;
+  transition: opacity 0.3s ease;
+}
+.mandate-link:hover { opacity: 0.8; }
+
+.mandate-card:last-child {
+  border-right: none;
+}
+
+.mandate-card:hover {
+  border-color: var(--c-gold, #C7A962);   /* border colour only — background stays static */
+  z-index: 2;
+}
+
+.mandate-card-title {
+  font-family: var(--f-serif, serif);
+  font-size: clamp(1.8rem, 3vw, 2.6rem); /* Updated to match the Thesis hook */
+  color: var(--c-gold, #C7A962);
+  margin-bottom: 3rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.mandate-card-body {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+
+.mandate-card-sub {
+  font-style: italic;
+  opacity: 0.7;
+  color: #FFFFFF;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.mandate-card-btn {
+  font-family: var(--f-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-gold, #C7A962);
+  text-decoration: none;
+  font-weight: 600;
+  align-self: flex-start;
+  transition: opacity 0.3s ease;
+}
+
+.mandate-card-btn:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 980px) {
+  .mandates-grid {
+    grid-template-columns: 1fr;
+  }
+  .mandate-card {
+    border-right: none;
+  }
+}
+
+/* 13-inch laptops (~1024–1280px): shrink the ETH Zürich logo a touch more so it
+   doesn't crowd the description before the mobile breakpoint takes over. */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  #engagements.eng-compact .eng-logo { max-width: 140px; }
+}
+
+/* 13-15" laptops: the research section titles hit their 4.4rem cap and feel oversized.
+   Scale them to ~0.7x below 1440px (16" screens at >=1536px keep the full size). */
+@media (max-width: 1440px) {
+  #research-areas .section-title,
+  #rd-commitment .section-title,
+  #pipeline .pedigree-head .section-title {
+    font-size: clamp(1.85rem, 4.2vw, 3.05rem);
+  }
+}
+

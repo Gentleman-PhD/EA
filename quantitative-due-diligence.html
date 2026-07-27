@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You're Allocating Capital: Buy-Side Technical Due Diligence | Euler Advisory</title>
+<meta name="description" content="Independent buy-side quantitative due diligence: teardowns, lifecycle checks, and standing mandates for allocators, risk committees, funds, and sovereign reserve managers." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://euler-advisory.com/quantitative-due-diligence.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="You're Allocating Capital | Euler Advisory" />
+<meta property="og:description" content="We tear down the model you're evaluating as your offensive quant, independent and single-sided, and hand you the exact point it breaks before the wire moves." />
+<meta property="og:url" content="https://euler-advisory.com/quantitative-due-diligence.html" />
+<meta property="og:site_name" content="Euler Advisory" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="icon" href="Images/Euler_Advisory_Logo.png" type="image/png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============================ HEADER / NAV ============================ -->
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Euler Advisory home">
+      <img class="brand-logo" src="Images/Euler_Advisory_Logo_4black.png" alt="Euler Advisory" />
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <div class="nav-item has-dropdown">
+        <a href="about.html" aria-haspopup="true">Who We Are</a>
+        <div class="nav-dropdown" role="menu">
+          <a href="about.html#founder" role="menuitem">The Founder</a>
+          <a href="about.html#euler-standard" role="menuitem">Our Standard</a>
+          <a href="about.html#presence" role="menuitem">Institutional Presence</a>
+        </div>
+      </div>
+      <a href="who-we-serve.html">Who We Serve</a>
+      <div class="nav-item has-dropdown">
+        <a href="services.html" aria-haspopup="true">Services</a>
+        <div class="nav-dropdown" role="menu">
+          <a href="services.html#institutional-risk-validation" role="menuitem">Institutional Risk &amp; Validation</a>
+          <a href="services.html#digital-asset-engineering" role="menuitem">Digital Asset Engineering &amp; Due Diligence</a>
+          <a href="digital-asset-architecture.html" role="menuitem">You're Raising Capital</a>
+          <a href="quantitative-due-diligence.html" class="is-active" role="menuitem">You're Allocating Capital</a>
+          <a href="regulatory-supervision.html" role="menuitem">You're Supervising &amp; Regulating</a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown">
+        <a href="research.html" aria-haspopup="true">Research &amp; Innovation</a>
+        <div class="nav-dropdown" role="menu">
+          <a href="research.html#research-areas" role="menuitem">Research Areas</a>
+          <a href="research.html#rd-commitment" role="menuitem">Institutional R&amp;D Commitment</a>
+          <a href="research.html#pipeline" role="menuitem">Ongoing Research</a>
+          <a href="research.html#engagements" role="menuitem">Workshops, Lectures and Talks</a>
+        </div>
+      </div>
+      <a href="all-sessions.html">Events</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">Who We Are</a>
+    <a href="who-we-serve.html">Who We Serve</a>
+    <a href="services.html">Services</a>
+    <a class="mobile-sub" href="services.html#institutional-risk-validation">Institutional Risk &amp; Validation</a>
+    <a class="mobile-sub" href="services.html#digital-asset-engineering">Digital Asset Engineering &amp; Due Diligence</a>
+    <a class="mobile-sub" href="digital-asset-architecture.html">You're Raising Capital</a>
+    <a class="mobile-sub is-active" href="quantitative-due-diligence.html">You're Allocating Capital</a>
+    <a class="mobile-sub" href="regulatory-supervision.html">You're Supervising &amp; Regulating</a>
+    <a href="research.html">Research &amp; Innovation</a>
+    <a href="all-sessions.html">Events</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="daa-hero-wrap">
+  <!-- ============================ HERO + ANCHOR NAV ============================ -->
+  <section class="daa-hero">
+    <div class="container">
+      <p class="daa-eyebrow reveal">SERVICES · FOR ALLOCATORS</p>
+      <h1 class="daa-title reveal">You're allocating capital</h1>
+      <p class="hero-sub reveal" style="font-size: clamp(1.1rem, 1.5vw, 1.3rem); line-height: 1.6; color: #FFFFFF; margin-top: 2rem; max-width: 900px;">
+        The risk model you're evaluating was built by the team selling you the upside. We tear it down as your offensive quant, independent, single-sided, and hand you the exact point it breaks, before the wire moves.
+      </p>
+      <nav class="daa-anchors reveal" aria-label="On this page">
+        <a href="#institutional-tokenomics">The Teardown</a>
+        <a href="#lifecycle-check">The Lifecycle Check</a>
+        <a href="#teardown-matrix">Pitch vs. Teardown</a>
+        <a href="#quant-leadership">Standing Mandate</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============================ FULL-BLEED BANNER IMAGE ============================ -->
+  <div class="daa-banner">
+    <img src="Images/Service1.png" alt="Digital Asset Architecture banner" />
+  </div>
+  </div><!-- /.daa-hero-wrap -->
+
+  <!-- ============================ THE ALLOCATOR REALITY BAND ============================ -->
+  <section class="section reality-band" style="padding: 5rem 2rem; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <div class="container reveal" style="max-width: 1000px; margin: 0 auto; text-align: center;">
+      <p style="font-size: 1.25rem; line-height: 1.8; color: #FFFFFF; font-weight: 400; opacity: 0.9; margin-bottom: 2rem;">
+        A dashboard reading 150% health factor looks safe, right up until liquidity, collateral, and debt, reflexively linked, unwind together.<br /><br />
+        Static coverage ratios are blind to that cascade. By the time the metric moves, your capital is already inside. Diligence that stops at the code audit leaves the economic design, where capital actually dies, untouched.
+      </p>
+      <p style="display: block; color: var(--c-gold, #C7A962); font-family: var(--f-serif, serif); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 500; margin: 0;">
+        We don't.
+      </p>
+    </div>
+  </section>
+
+  <div class="daa-content">
+  <!-- ============================ PROCESS STRIP ============================ -->
+  <section class="process-strip reveal" aria-label="Our process">
+    <div class="process-inner">
+      <div class="process-step"><span class="process-num">1</span><span class="process-label">First-Principles Teardown</span></div>
+      <div class="process-line" aria-hidden="true"></div>
+      <div class="process-step"><span class="process-num">2</span><span class="process-label">Correlated Simulation</span></div>
+      <div class="process-line" aria-hidden="true"></div>
+      <div class="process-step"><span class="process-num">3</span><span class="process-label">The Solvency Boundary</span></div>
+    </div>
+    <p class="process-timeline">Executed in 3 to 6 weeks, timed to your deployment, not rushed for it.</p>
+  </section>
+
+  <!-- ============================ 1. THE TEARDOWN ============================ -->
+  <section class="daa-section" id="institutional-tokenomics">
+    <div class="container daa-grid">
+      <h2 class="daa-sec-title reveal">The Teardown: break it before you wire</h2>
+      <p class="daa-macro reveal">The asymmetry in digital-asset allocation is that the risk model you evaluate was built by the team selling you the upside, optimised to survive the scenarios they chose to test. Smart contracts executing flawlessly do not prevent economic collapse. Real diligence means dismantling the architecture to find the exact threshold where their assumptions fail. Whether the target is a protocol raising a round or a tokenized instrument on a public balance sheet, the asymmetry is the same.</p>
+      <div class="daa-cols">
+        <div class="daa-leftcol">
+        <p class="daa-mission reveal">THE WORK</p>
+        </div>
+        <div class="daa-right reveal">
+        <p class="daa-body">We reconstruct the target's economic and risk logic from first principles, separate the assumptions that hold in any market from the ones that only hold in a rising one, and stress the structure against the correlated panic the founder's model assumed away. Collateral, liquidity, leverage, and redemption logic are modelled as a coupled system, so liquidation cascades, de-peg spirals, and reserve dislocation surface as price paths, not footnotes.</p>
+        </div>
+      </div>
+
+      <div class="daa-cols" style="margin-top: 3rem;">
+        <div class="daa-leftcol">
+        <p class="daa-mission reveal">WHAT YOU GET</p>
+        </div>
+        <div class="daa-right reveal">
+        <p class="daa-body">An independent, evidence-based read written for your investment committee: the exact solvency-failure point, the trigger conditions, and your true distance to ruin, free of the founder's framing and independent of the party raising the capital. You price the real risk, not the pitched one.</p>
+        <a class="daa-link" href="index.html#contact">Discuss the teardown <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================ 2. THE LIFECYCLE CHECK ============================ -->
+  <div class="daa-rule" aria-hidden="true"><span></span></div>
+
+  <section class="daa-section" id="lifecycle-check">
+    <div class="container daa-grid">
+      <h2 class="daa-sec-title reveal">The Lifecycle Check: is this exit liquidity?</h2>
+      <p class="daa-macro reveal">High yield and fast TVL growth at launch are almost always subsidised by terminal dilution. When the emission schedule outpaces real economic utility, the early allocator is the exit liquidity. Day-one traction tells you nothing about whether the economics survive their own supply curve.</p>
+      <div class="daa-cols">
+        <div class="daa-leftcol">
+        <p class="daa-mission reveal">THE WORK</p>
+        </div>
+        <div class="daa-right reveal">
+        <p class="daa-body">We project the full token lifecycle: emission schedules, staking incentives, sink-and-source flows, and demand constraints simulated as a coupled system over time. We strip out speculative growth assumptions and locate the precise point where incentives stop clearing, the moment the economy ceases to be self-sustaining.</p>
+        </div>
+      </div>
+
+      <div class="daa-cols" style="margin-top: 3rem;">
+        <div class="daa-leftcol">
+        <p class="daa-mission reveal">WHAT YOU GET</p>
+        </div>
+        <div class="daa-right reveal">
+        <p class="daa-body">The exact horizon where the structure stops paying for itself, stated plainly enough for your risk committee to challenge, so you know whether you're underwriting real economic value: a business worth backing, a reserve asset worth holding, or just funding someone's exit.</p>
+        <a class="daa-link" href="index.html#contact">Discuss the lifecycle check <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ THE TEARDOWN MATRIX (cloned from Sell-Side) ============================ -->
+  <div class="daa-rule" aria-hidden="true"><span></span></div>
+
+  <section class="daa-section diligence-matrix" id="teardown-matrix" style="scroll-margin-top: 110px;">
+    <div class="container daa-grid">
+      <h2 class="daa-sec-title reveal">What the pitch says / what the teardown finds</h2>
+      <p class="daa-macro reveal" style="font-size: clamp(1.2rem, 1.7vw, 1.6rem); margin-bottom: 4rem; max-width: none;">Every target clears its own first look. Here's the gap between what the deck claims and what the architecture actually does under stress.</p>
+
+      <div class="matrix-grid reveal">
+        <div class="matrix-header">
+          <div class="matrix-head-cell">The Pitch Says</div>
+          <div class="matrix-head-cell">The Teardown Finds</div>
+        </div>
+        <div class="matrix-row" style="border-top: 0;">
+          <div class="matrix-left">"Over-collateralised at 180%."</div>
+          <div class="matrix-right"><span style="color: var(--c-gold); font-weight: 500;">Stress-thin.</span> Holds at today's prices; crosses below redemption obligations well before assets are exhausted.</div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-left">"Audited, battle-tested contracts."</div>
+          <div class="matrix-right"><span style="color: var(--c-gold); font-weight: 500;">Code-safe, economically fragile.</span> The contracts execute; the economic design fails at a price the audit never modelled.</div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-left">"Sustainable yield from real demand."</div>
+          <div class="matrix-right"><span style="color: var(--c-gold); font-weight: 500;">Subsidised.</span> On the current schedule, dilution outpaces demand; early capital is the exit liquidity.</div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-left">"Diversified, uncorrelated collateral."</div>
+          <div class="matrix-right"><span style="color: var(--c-gold); font-weight: 500;">Co-dependent.</span> Shared liquidity venues; the assets de-peg together in exactly the scenario you're underwriting against.</div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-left">"Stress-tested internally."</div>
+          <div class="matrix-right"><span style="color: var(--c-gold); font-weight: 500;">Isolated only.</span> Tested against single shocks, not correlated panic. The reflexive loop was assumed away.</div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-left">"Compliant, regulator-ready structure."</div>
+          <div class="matrix-right"><span style="color: var(--c-gold); font-weight: 500;">Scrutinised.</span> The structure is reviewed against the exact lens used to approve frameworks under ESMA supervision, where passing a code audit and surviving a supervisor are entirely different tests.</div>
+        </div>
+      </div>
+
+      <div class="matrix-closing reveal">
+        <p>The pitch is built to clear your first look. The teardown is built to survive your worst case. You price the second one.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 4. FRACTIONAL QUANT LEADERSHIP ============================ -->
+  <section class="daa-section section-inverted" id="quant-leadership">
+    <div class="container daa-grid">
+      <h2 class="daa-sec-title reveal">Standing Diligence Mandate</h2>
+      <p class="daa-macro reveal">If you deploy into digital assets repeatedly, every new target arrives with its own model built by its own founders, and your team re-runs the same teardown from scratch, or worse, skips it under deal pressure. The gap isn't any single diligence. It's the inconsistency across your pipeline, where the deal that gets the lightest scrutiny is the one that breaks you.</p>
+      
+      <div class="daa-cols">
+        <div class="daa-leftcol">
+        <p class="daa-mission reveal">THE WORK</p>
+        </div>
+        <div class="daa-right reveal">
+        <p class="daa-body">If you deploy into digital assets repeatedly, one-off teardowns leave gaps between deals. A standing mandate puts an independent quant risk function on retainer: every target that reaches your desk gets the same hostile, single-sided teardown before it reaches your committee.</p>
+        </div>
+      </div>
+
+      <div class="daa-cols" style="margin-top: 3rem;">
+        <div class="daa-leftcol">
+        <p class="daa-mission reveal">WHAT YOU GET</p>
+        </div>
+        <div class="daa-right reveal">
+        <p class="daa-body">Consistent, independent diligence across your pipeline, scaled to your deal flow, without building and carrying an in-house quant risk team. We hold the standard; you keep the deployment decision.</p>
+        <a class="daa-link" href="index.html#contact">Discuss the standing mandate <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CTA ============================ -->
+  <section class="section contact contact--service" id="contact">
+    <div class="contact-surface" aria-hidden="true"></div>
+    <div class="container contact-inner">
+      <p class="section-kicker reveal" style="text-align:center;">Contact</p>
+      <h2 class="contact-title reveal">Independence is the product</h2>
+      <p class="contact-lede reveal">
+        Learning exactly where a defence goes thin: before digital assets, we spent years validating <br />
+        and approving methodologies inside a European credit and ESG ratings agency subject to ESMA <br />
+        supervision, the internal challenge function a supervisor relies on. We challenged 20+ <br />
+        professionals from within a regulated entity. We never diligence a model we authored, <br />
+        and we act for one side of any transaction. We maintain strict conflict of interest <br />
+        firewalls, never advising the entities we assess, and our deliverables are documented <br />
+        to an evidentiary standard. PhD in applied mathematics.
+      </p>
+      <a href="index.html#contact" class="btn btn-primary contact-btn reveal">Request a teardown consultation</a>
+    </div>
+  </section>
+  </div><!-- /.daa-content -->
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      <img class="footer-logo-img" src="Images/Euler_Advisory_Logo_4black.png" alt="Euler Advisory" />
+    </div>
+    <div class="footer-text">
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="about.html">Who We Are</a>
+      <a href="services.html">Services</a>
+      <a href="research.html">Research &amp; Innovation</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <p class="footer-statement">
+      Euler Advisory provides quantitative model development, independent model-validation opinions, and
+      technical due diligence. An opinion on a model's soundness given its inputs is not a guarantee of
+      solvency, an audit, or investment advice. We operate as technical experts only, never as placement
+      agents or brokers, and we never validate a model engineered by our developing practice. Regulatory references are provided for context and do not imply endorsement by any authority.
+    </p>
+    <p class="footer-meta">
+      <a href="mailto:hello@euler-advisory.com">hello@euler-advisory.com</a>
+      <span class="dot">·</span><span>Independent · free of conflict · PhD-level</span>
+      <span class="dot">·</span><span>© 2026 Euler Advisory</span>
+    </p>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
