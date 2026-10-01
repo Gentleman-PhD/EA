@@ -223,7 +223,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Hero value-proposition block (audiences + positioning). Left-aligned, constrained
    to the hero's left column, scales down cleanly on mobile via the clamp + max-width. */
-.hero-subtext-container { margin-top: 2rem; margin-bottom: clamp(2rem, 4vh, 2.75rem); max-width: 60ch; font-size: clamp(1rem, 1.35vw, 1.125rem); line-height: 1.6; color: var(--c-ink-2); }
+.hero-subtext-container { margin-top: 2rem; margin-bottom: clamp(2rem, 4vh, 2.75rem); max-width: 88ch; font-size: clamp(1rem, 1.35vw, 1.125rem); line-height: 1.6; color: var(--c-ink-2); text-wrap: pretty; }
 .hero-intro { margin: 0 0 0.5rem; color: var(--c-ink-3); }
 .hero-list p { margin: 0; line-height: 1.75; }
 .hero-outro { margin: 1rem 0 0; font-weight: 500; letter-spacing: 0.04em; color: #F4F1EA; }
@@ -1543,7 +1543,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
 .thesis-outro { font-family: var(--f-serif); font-weight: 400; font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1.08; letter-spacing: -0.015em; color: var(--c-gold); margin: 0; max-width: none; }
 
 /* ---- Thesis metric grid: 4 columns split by hairline rules ---- */
-.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin: clamp(3.5rem, 7vw, 6rem) 0 0; padding: 0; border-top: 1px solid rgba(46,48,71,0.10); }
+.metric-grid { display: grid; grid-template-columns: repeat(5, 1fr); margin: clamp(3.5rem, 7vw, 6rem) 0 0; padding: 0; border-top: 1px solid rgba(46,48,71,0.10); }
 .metric { padding: clamp(2rem, 3.5vw, 3rem) clamp(1rem, 2.5vw, 2.25rem); }
 /* Delicate dividers — faint, never harsh; inset so they read as rules, not borders */
 .metric + .metric { border-left: 1px solid rgba(46,48,71,0.10); }
@@ -1561,7 +1561,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
 
 @media (max-width: 900px) {
   .metric-grid { grid-template-columns: repeat(2, 1fr); }
-  .metric:nth-child(3) { border-left: 0; }                     /* first item of row 2 */
+  .metric:nth-child(odd) { border-left: 0; }                   /* column-1 items (1,3,5) in the 2-col layout */
   .metric:nth-child(n+3) { border-top: 1px solid rgba(46,48,71,0.10); }
   #proof-metrics .metric:nth-child(n+3) { border-top-color: rgba(255,255,255,0.14); }
 }
@@ -1666,6 +1666,17 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
 .daa-link span { display: inline-block; transition: transform .25s var(--ease); }
 .daa-link:hover { color: var(--c-bronze); }
 .daa-link:hover span { transform: translateX(5px); }
+/* Section-title + typeset sub-line (e.g. "Credit Ratings · ESG Ratings · Hybrid Methodologies") */
+.daa-title-group { margin-bottom: clamp(28px, 4vh, 48px); }
+.daa-title-group .daa-sec-title { margin-bottom: 0; }
+.daa-sec-sub { margin: 0.7rem 0 0; font-family: var(--f-mono); font-size: clamp(0.82rem, 1vw, 0.98rem); letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-bronze); }
+/* Bulleted list inside a right-column body block */
+.daa-ul { list-style: none; margin: 0; padding: 0; align-self: stretch; display: flex; flex-direction: column; gap: clamp(10px, 1.4vh, 14px); }
+.daa-ul li { position: relative; padding-left: 1.5rem; font-family: var(--f-sans); font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.7; color: var(--c-gunmetal); text-align: left; }
+.daa-ul li::before { content: ""; position: absolute; left: 0.1rem; top: 0.66em; width: 6px; height: 6px; border-radius: 50%; background: var(--c-gold); }
+.daa-ul li strong { font-weight: 600; }
+/* Small regulatory-citation footnote beneath a section preamble */
+.daa-cite { margin: 0.5rem 0 0; font-family: var(--f-sans); font-size: clamp(0.78rem, 0.95vw, 0.86rem); line-height: 1.55; color: var(--c-gunmetal); opacity: 0.55; max-width: 80ch; }
 
 /* Execution Grid — 3-column "threat / defense / arsenal" band below the text */
 .daa-exec { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; border-top: 1px solid rgba(46,48,71,0.14); padding-top: 2rem; margin-top: 3rem; }   /* dark separator: white would vanish on the off-white surface */
@@ -1725,6 +1736,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
 .process-num { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 1px solid rgba(199,169,98,0.5); color: var(--c-gold); font-family: var(--f-mono); font-size: 0.95rem; flex-shrink: 0; }
 .process-label { font-family: var(--f-sans); font-size: clamp(0.9rem, 1.1vw, 1.05rem); color: rgba(255,255,255,0.85); letter-spacing: 0.01em; }
 .process-line { flex-grow: 1; height: 1px; background: rgba(255,255,255,0.2); margin: 0 clamp(1rem, 2.5vw, 2rem); }
+.process-caption { max-width: 1100px; margin: clamp(1rem, 2vh, 1.5rem) auto 0; font-family: var(--f-sans); font-size: clamp(0.82rem, 1vw, 0.95rem); color: rgba(255,255,255,0.6); letter-spacing: 0.01em; }
 /* Pace signal beneath the process steps */
 .process-timeline { max-width: 1100px; margin: clamp(2rem, 3.5vw, 2.75rem) auto 0; text-align: center; font-family: var(--f-sans); font-size: clamp(0.95rem, 1.1vw, 1.05rem); color: rgba(255,255,255,0.72); }
 

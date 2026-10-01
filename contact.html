@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact | Euler Advisory</title>
+<meta name="description" content="Book a confidential scoping call with Euler Advisory to discuss an independent quantitative review of your tokenomics, reserves, collateral or exposures." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://euler-advisory.com/contact.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Contact | Euler Advisory" />
+<meta property="og:description" content="Book a confidential scoping call with Euler Advisory." />
+<meta property="og:url" content="https://euler-advisory.com/contact.html" />
+<meta property="og:site_name" content="Euler Advisory" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="icon" href="Images/Euler_Advisory_Logo.png" type="image/png" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* ---- Contact page: single section, left copy + right Calendly, dark surface, no background image ---- */
+  .contact-page { min-height: 100vh; display: flex; align-items: center; background: var(--c-bg); padding: calc(72px + clamp(48px, 9vh, 120px)) var(--gutter) clamp(48px, 9vh, 120px); }
+  .contact-page-grid { width: 100%; max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2.5rem, 6vw, 6.5rem); align-items: center; }
+  .contact-page-kicker { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin: 0 0 1.5rem; }
+  .contact-page-heading { font-family: var(--f-serif); font-weight: 500; font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1; letter-spacing: -0.015em; color: var(--c-gold); margin: 0 0 1.75rem; }
+  .contact-page-copy { font-family: var(--f-sans); font-weight: 400; font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.7; color: var(--c-ink-2); max-width: 44ch; margin: 0 0 1.5rem; }
+  .contact-page-meta { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--c-ink-3); margin: 0; }
+  .contact-page-meta a { color: var(--c-gold); }
+  .contact-page-cal { background: #FFFFFF; border-radius: 8px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35); }
+  .calendly-inline-widget { min-width: 320px; height: 720px; }
+  @media (max-width: 960px) {
+    .contact-page-grid { grid-template-columns: 1fr; gap: clamp(2rem, 6vh, 3rem); }
+    .calendly-inline-widget { height: 680px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ HEADER / NAV ============================ -->
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Euler Advisory home">
+      <img class="brand-logo" src="Images/Euler_Advisory_Logo_4black.png" alt="Euler Advisory" />
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <div class="nav-item has-dropdown">
+        <a href="about.html" aria-haspopup="true">Who We Are</a>
+        <div class="nav-dropdown" role="menu">
+          <a href="about.html#founder" role="menuitem">The Founder</a>
+          <a href="about.html#euler-standard" role="menuitem">Our Standard</a>
+          <a href="about.html#presence" role="menuitem">Institutional Presence</a>
+        </div>
+      </div>
+      <a href="index.html#solutions">Who We Serve</a>
+      <div class="nav-item has-dropdown">
+        <a href="index.html#services" aria-haspopup="true">Services</a>
+        <div class="nav-dropdown" role="menu">
+          <a href="digital-asset-architecture.html" role="menuitem">You're Raising Capital</a>
+          <a href="quantitative-due-diligence.html" role="menuitem">You're Allocating Capital</a>
+          <a href="regulatory-supervision.html" role="menuitem">You're Supervising &amp; Regulating</a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown">
+        <a href="research.html" aria-haspopup="true">Research &amp; Innovation</a>
+        <div class="nav-dropdown" role="menu">
+          <a href="research.html#research-areas" role="menuitem">Research Areas</a>
+          <a href="research.html#rd-commitment" role="menuitem">Institutional R&amp;D Commitment</a>
+          <a href="research.html#pipeline" role="menuitem">Ongoing Research</a>
+          <a href="research.html#engagements" role="menuitem">Workshops, Lectures and Talks</a>
+        </div>
+      </div>
+      <a href="all-sessions.html">Events</a>
+      <a href="contact.html" class="nav-cta is-active">Contact</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">Who We Are</a>
+    <a class="mobile-sub" href="about.html#founder">The Founder</a>
+    <a class="mobile-sub" href="about.html#euler-standard">Our Standard</a>
+    <a class="mobile-sub" href="about.html#presence">Institutional Presence</a>
+    <a href="index.html#solutions">Who We Serve</a>
+    <a href="index.html#services">Services</a>
+    <a class="mobile-sub" href="digital-asset-architecture.html">You're Raising Capital</a>
+    <a class="mobile-sub" href="quantitative-due-diligence.html">You're Allocating Capital</a>
+    <a class="mobile-sub" href="regulatory-supervision.html">You're Supervising &amp; Regulating</a>
+    <a href="research.html">Research &amp; Innovation</a>
+    <a class="mobile-sub" href="research.html#research-areas">Research Areas</a>
+    <a class="mobile-sub" href="research.html#rd-commitment">Institutional R&amp;D Commitment</a>
+    <a class="mobile-sub" href="research.html#pipeline">Ongoing Research</a>
+    <a class="mobile-sub" href="research.html#engagements">Workshops, Lectures and Talks</a>
+    <a href="all-sessions.html">Events</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============================ CONTACT ============================ -->
+  <section class="contact-page">
+    <div class="contact-page-grid">
+      <div class="contact-page-left reveal">
+        <p class="contact-page-kicker">Contact</p>
+        <h1 class="contact-page-heading">Let's talk.</h1>
+        <p class="contact-page-copy">Book a confidential scoping call to discuss the structure in question, the decision in front of you, and where an independent quantitative review fits. No pitch, no obligation.</p>
+        <p class="contact-page-meta"><a href="mailto:hello@euler-advisory.com">hello@euler-advisory.com</a></p>
+      </div>
+      <div class="contact-page-cal reveal">
+        <div class="calendly-inline-widget" data-url="https://calendly.com/euleradvisory/30min" aria-label="Book a call with Euler Advisory"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      <img class="footer-logo-img" src="Images/Euler_Advisory_Logo_4black.png" alt="Euler Advisory" />
+    </div>
+    <div class="footer-text">
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="about.html">Who We Are</a>
+      <a href="index.html#services">Services</a>
+      <a href="research.html">Research &amp; Innovation</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <p class="footer-statement">
+      Euler Advisory provides independent model-validation opinions on the mathematical and methodological
+      soundness of models given their inputs. An opinion is not a guarantee of solvency, an audit, or investment
+      advice. We never validate a model our developing practice engineered, and never engineer a model we are contracted to validate. Regulatory references are provided for context and do not imply endorsement by any authority.
+    </p>
+    <p class="footer-meta">
+      <a href="mailto:hello@euler-advisory.com">hello@euler-advisory.com</a>
+      <span class="dot">·</span><span>Independent · free of conflict · PhD-level</span>
+      <span class="dot">·</span><span>© 2026 Euler Advisory</span>
+    </p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script src="script.js"></script>
+</body>
+</html>
