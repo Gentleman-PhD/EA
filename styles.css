@@ -25,6 +25,7 @@
   --c-bronze-dk: #8C744E;
   --c-bronze-tn: rgba(184, 151, 102, 0.14);
   --c-gold:      #D4AF37;   /* premium metallic gold — feature titles/links */
+  --c-gold-ink:  #7A5C12;   /* dark gold for text on white/off-white: 6.0:1 on #FAFAFA (WCAG AA) */
 
   --c-sage:      #AEB79C;   /* climate vertical only */
   --c-sage-line: #8F9779;
@@ -370,7 +371,7 @@ a { color: inherit; text-decoration: none; }
 /* 2-column footer: big logo left, all text right (flush to the right margin) */
 .footer-inner { display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: clamp(32px, 6vw, 100px); }
 .footer-logo { flex: none; }
-.footer-logo-img { width: 500px; max-width: 60vw; height: auto; display: block; }   /* 2x larger — commands the bottom-left corner */
+.footer-logo-img { width: 200px; max-width: 40vw; height: auto; display: block; object-fit: contain; }   /* square logo; script.js sets its height to the footer text block (Home to email). 200px is the no-JS fallback */
 .footer-text { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; text-align: right; }
 .footer-nav { display: flex; gap: 26px; flex-wrap: wrap; justify-content: flex-end; }
 .footer-nav a { font-size: 0.84rem; color: var(--c-ink-2); }
@@ -616,7 +617,6 @@ a { color: inherit; text-decoration: none; }
 #rd-commitment .logo-strip-item[data-fallback="CNRS"] img            { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }
 #rd-commitment .logo-strip-item[data-fallback="ERC"] img             { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }
 #rd-commitment .logo-strip-item[data-fallback="Sorbonne"] img        { height: calc(60px * var(--logo-scale)); max-width: calc(258px * var(--logo-scale)); }
-#rd-commitment .logo-strip-item[data-fallback="Polytechnique"] img   { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }
 #rd-commitment .logo-strip-item[data-fallback="CentraleSupélec"] img { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }
 #rd-commitment .logo-strip-item[data-fallback="ETH Zürich"] img      { height: calc(45px * var(--logo-scale)); max-width: calc(194px * var(--logo-scale)); }
 #rd-commitment .logo-strip-item[data-fallback="ESILV"] img           { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }
@@ -1025,7 +1025,6 @@ a { color: inherit; text-decoration: none; }
 #pedigree .logo-strip-item[data-fallback="CNRS"] img            { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }   /* 1.3× */
 #pedigree .logo-strip-item[data-fallback="ERC"] img             { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }   /* 1.5× (listed as "HEC") */
 #pedigree .logo-strip-item[data-fallback="Sorbonne"] img        { height: calc(60px * var(--logo-scale)); max-width: calc(258px * var(--logo-scale)); }   /* 1.2× */
-#pedigree .logo-strip-item[data-fallback="Polytechnique"] img   { height: calc(75px * var(--logo-scale)); max-width: calc(323px * var(--logo-scale)); }   /* 1.5× */
 #pedigree .logo-strip-item[data-fallback="CentraleSupélec"] img { height: calc(65px * var(--logo-scale)); max-width: calc(280px * var(--logo-scale)); }   /* 1.3× */
 #pedigree .logo-strip-item[data-fallback="ETH Zürich"] img      { height: calc(45px * var(--logo-scale)); max-width: calc(194px * var(--logo-scale)); }   /* 0.9× */
 #pedigree .logo-strip-item[data-fallback="Caan"] img            { height: calc(50px * var(--logo-scale)); max-width: calc(215px * var(--logo-scale)); }   /* 1×   */
@@ -1134,14 +1133,14 @@ a { color: inherit; text-decoration: none; }
   .commercial-items { grid-template-columns: 1fr; gap: 22px; }
   .logo-grid-academic { grid-template-columns: repeat(4, 1fr); }
   .logo-grid-ecosystem { grid-template-columns: repeat(4, 1fr); }
-}
-@media (max-width: 640px) {
-  .framing { grid-template-columns: 1fr; }
-  /* Footer stacks: logo above, text left-aligned */
+  /* Footer stacks below 960px: side by side, a logo as tall as the text column squeezes the text and both grow */
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 30px; }
   .footer-text { align-items: flex-start; text-align: left; }
   .footer-nav, .footer-meta { justify-content: flex-start; }
-  .footer-logo-img { width: 320px; max-width: 80vw; }
+  .footer-logo-img { width: 160px; max-width: 50vw; }   /* stacked layout: logo above the text */
+}
+@media (max-width: 640px) {
+  .framing { grid-template-columns: 1fr; }
   .trust-bar-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
   .cv li { grid-template-columns: 1fr; gap: 8px; }
   .hero, .page-hero { min-height: 92vh; }
@@ -1347,7 +1346,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
    viewport while the solid intro section slides up over it like a curtain.
    Scoped to #hero so the split heroes on Services/Events are untouched.
    ===================================================================== */
-#hero.hero { position: sticky; top: 0; height: 100svh; min-height: 100svh; z-index: 1; background-color: var(--c-gunmetal); background-image: url('Images/hero_background.png'); background-size: cover; background-position: right center; background-repeat: no-repeat; justify-content: center; padding-top: clamp(160px, 26vh, 360px); padding-bottom: 90px; }   /* static hero image pinned right; gunmetal fallback; void kept left */
+#hero.hero { position: sticky; top: 0; height: 100svh; min-height: 100svh; z-index: 1; background-color: var(--c-gunmetal); background-image: url('Images/hero_background.jpg'); background-size: cover; background-position: right center; background-repeat: no-repeat; justify-content: center; padding-top: clamp(160px, 26vh, 360px); padding-bottom: 90px; }   /* static hero image pinned right; gunmetal fallback; void kept left */
 /* Cinematic hero video + brand scrim */
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
 .hero-scrim { position: absolute; inset: 0; z-index: 1; background: rgba(46, 48, 71, 0.6); pointer-events: none; }   /* transparent #2E3047 brand layer over the ocean footage */
@@ -1923,3 +1922,124 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
 @media (max-width: 1280px) { #pedigree, #rd-commitment { --logo-scale: 0.72; } }
 @media (max-width: 1080px) { #pedigree, #rd-commitment { --logo-scale: 0.60; } }
 @media (max-width: 767px)  { #pedigree, #rd-commitment { --logo-scale: 0.9; } #pedigree .logo-strip, #rd-commitment .logo-strip { flex-wrap: wrap; } }
+
+/* ================= V58: service-page hero (CTA row + "Where are you now?" chips) ================= */
+.hero-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: clamp(28px, 4vh, 40px); }
+.hero-cta-link { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--f-sans); font-size: 0.95rem; color: rgba(255,255,255,0.82); text-decoration: underline; text-underline-offset: 4px; }
+.hero-cta-link:hover { color: #FFFFFF; }
+.hero-chips { margin-top: clamp(28px, 5vh, 48px); padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.12); }
+.hero-chips-label { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.62); margin: 0 0 12px; }
+.hero-chips-list { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-chip { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; border: 1px solid rgba(212,175,55,0.45); color: #E9E4D4; font-family: var(--f-sans); font-size: 0.9rem; text-decoration: none; transition: border-color .2s ease, color .2s ease; }
+.hero-chip:hover, .hero-chip:focus-visible { border-color: #D4AF37; color: #FFFFFF; }
+
+/* Service-page hero: stop clipping on phones and short screens */
+@media (max-width: 768px), (max-height: 760px) {
+  .daa-hero-wrap { position: relative; height: auto; overflow: visible; }
+  .daa-banner { display: none; }
+}
+
+/* ================= V58: offer cards (service pages) ================= */
+.offers { position: relative; z-index: 10; background: var(--c-offwhite); padding: clamp(64px, 9vh, 112px) 0; scroll-margin-top: 110px; }
+.offers .container { max-width: 1240px; }
+.offers-eyebrow { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: #7A5C12; margin: 0 0 12px; }
+.offers-title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(2rem, 3.4vw, 2.75rem); line-height: 1.12; letter-spacing: -0.01em; color: #1A1B28; margin: 0 0 clamp(28px, 4vh, 44px); }
+.offers-intro { font-family: var(--f-sans); font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; color: #2E3047; max-width: 70ch; margin: 0 0 clamp(28px, 4vh, 44px); }
+.offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px; align-items: stretch; }
+.offer-grid--two { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 560px)); }
+.offer-card { display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 32px); background: #FFFFFF; border: 1px solid rgba(46,48,71,0.14); scroll-margin-top: 110px; }
+.offer-type, .offer-label { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: #7A5C12; margin: 0; }
+.offer-head, .offer-block { display: grid; gap: 8px; }
+.offer-name { font-family: var(--f-serif); font-weight: 500; font-size: clamp(1.6rem, 2.2vw, 1.9rem); line-height: 1.15; color: #1A1B28; margin: 0; }
+.offer-for { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.06em; color: #4A4E66; margin: 0; }
+.offer-outcome { font-family: var(--f-sans); font-weight: 500; font-size: 1.05rem; line-height: 1.5; color: #1A1B28; margin: 0; }
+.offer-list { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.offer-list li { font-family: var(--f-sans); font-size: 0.95rem; line-height: 1.5; color: #2E3047; }
+.offer-facts { margin: 0; padding-top: 16px; border-top: 1px solid rgba(46,48,71,0.12); font-family: var(--f-mono); font-size: 0.78rem; line-height: 1.6; color: #4A4E66; }
+.offer-more summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-family: var(--f-sans); font-size: 0.9rem; color: #2E3047; text-decoration: underline; text-underline-offset: 4px; }
+.offer-more p { font-family: var(--f-sans); font-size: 0.9rem; line-height: 1.55; color: #2E3047; margin: 10px 0 0; }
+.offer-more a { color: #7A5C12; }
+.offer-cta { margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; background: #1A1B28; color: #FFFFFF; font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background .2s ease; }
+.offer-cta:hover, .offer-cta:focus-visible { background: #2E3047; color: #FFFFFF; }
+.offers-rule, .offers-note { margin: 28px 0 0; font-family: var(--f-sans); font-size: 0.95rem; line-height: 1.6; color: #4A4E66; }
+.offers-note { margin-top: 8px; }
+.offers-note a { color: #7A5C12; }
+
+/* ================= V58: proof band (allocator page) ================= */
+.proof-band { position: relative; z-index: 10; background: #FFFFFF; border-top: 1px solid rgba(46,48,71,0.10); padding: clamp(48px, 7vh, 80px) 0; }
+.proof-text { font-family: var(--f-sans); font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; color: #2E3047; max-width: 70ch; margin: 0 0 16px; }
+.proof-punch { font-family: var(--f-serif); font-weight: 500; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.25; color: #1A1B28; max-width: 32ch; margin: 0; }
+
+/* ================= V58: principal strip (service pages) ================= */
+.principal-strip { position: relative; z-index: 10; background: #2E3047; color: #FFFFFF; padding: clamp(48px, 7vh, 72px) 0; }
+.principal-name { font-family: var(--f-serif); font-weight: 500; font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.3; color: #FFFFFF; margin: 0 0 clamp(24px, 4vh, 36px); }
+.principal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 28px 40px; }
+.principal-label { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #D4AF37; margin: 0 0 8px; }
+.principal-text { font-family: var(--f-sans); font-size: 1rem; line-height: 1.55; color: rgba(255,255,255,0.9); margin: 0; }
+
+/* ================= V58: homepage ================= */
+.thesis-lead--v58 { font-family: var(--f-serif); font-weight: 400; font-size: clamp(2.25rem, 4.2vw, 4rem); line-height: 1.1; letter-spacing: -0.015em; color: #7A5C12; max-width: 24ch; margin: 0 0 clamp(20px, 3vh, 32px); }
+.thesis-body { font-family: var(--f-sans); font-weight: 400; font-size: clamp(1.15rem, 1.6vw, 1.5rem); line-height: 1.5; color: #2E3047; max-width: 46ch; margin: 0; }
+.mandate-card-offers { list-style: none; margin: 1.75rem auto 0; padding: 0; max-width: 30ch; }
+.mandate-card-offers li { border-top: 1px solid rgba(212,175,55,0.3); }
+.mandate-card-offers li:last-child { border-bottom: 1px solid rgba(212,175,55,0.3); }
+.mandate-card-offers a { display: block; padding: 0.75rem 0; font-family: var(--f-sans); font-size: 0.95rem; line-height: 1.4; color: #FFFFFF; text-decoration: none; }
+.mandate-card-offers a:hover, .mandate-card-offers a:focus-visible { color: var(--c-gold); }
+.metric-word { font-family: var(--f-serif); }
+
+/* V58 fix: the Events and Research pages already style #engagements as a dark band (id rules outrank .offers).
+   Scoped to #engagements.offers so only the service-page offers section is affected. */
+#engagements.offers { background: var(--c-offwhite); padding: clamp(64px, 9vh, 112px) 0; }
+#engagements.offers .container { max-width: 1240px; }
+/* V58 fix: the global reset (ul, ol { list-style: none }) hides the bullets these two lists are spaced for */
+.offer-list, .contact-page-list { list-style: disc; }
+
+/* =====================================================================
+   Accessibility: gold and bronze text on light sections
+   #D4AF37 on #FAFAFA = 2.0:1 and #B89766 on #FFFFFF = 2.7:1, both below WCAG AA.
+   Text on white/off-white uses --c-gold-ink (#7A5C12, 6.0:1). Gold hairlines,
+   borders and dark-section text are unchanged. Selectors mirror the rules they override.
+   ===================================================================== */
+#insights .fb-col .fb-title,
+#insights .pl-collab-label,
+#pipeline .fb-col .fb-title,
+#pipeline .pl-collab-label,
+#pipeline .pl-readmore, #pipeline .pl-readmore:visited,
+#presence .eng-date,
+#presence .eng-title--date,
+.cv-key,
+#founder .terminal-link,
+#founder .terminal-link .tl-caret,
+.daa-sec-title,
+.matrix-head-cell,
+.routing-list li.routing-subhead,
+.routing-section .block-eyebrow,
+.routing-list a:hover,
+.faq-trigger:hover, .faq-trigger[aria-expanded="true"],
+#research-areas .ra-row:hover .ra-icon { color: var(--c-gold-ink); }
+#founder .terminal-link { border-color: var(--c-gold-ink); }
+/* the default hover (white text on a 14% bronze tint) is invisible on the white founder section */
+#founder .terminal-link:hover { background: var(--c-gold-ink); color: #FFFFFF; border-color: var(--c-gold-ink); }
+#founder .terminal-link:hover .tl-caret { color: #FFFFFF; }
+
+/* =====================================================================
+   Phone check (390 px), October 2026
+   ===================================================================== */
+@media (max-width: 960px) {
+  /* These stacking rules already existed higher up but lost to later desktop rules of equal specificity */
+  .routing-grid { grid-template-columns: 1fr; gap: 40px; }           /* Solutions: By product, then By role */
+  #euler-standard .es-step { grid-template-columns: 1fr; gap: 14px; } /* About, Our Standard: title above text */
+  /* Footer meta on the stacked footer: one item per line, no orphaned separators */
+  .footer-meta { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .footer-meta .dot { display: none; }
+}
+@media (max-width: 1199px) {
+  /* Research cards: keep the collaborator logos clear of the absolutely positioned 'Read more' and status badge */
+  #pipeline .fb-col { padding-bottom: 88px; }
+}
+@media (max-width: 640px) {
+  .pedigree-head { grid-template-columns: 1fr; gap: 16px; }          /* Research, Ongoing Research: title above text */
+  /* Service pages: one side margin. Hero and matrix used a doubled inset (40px), offers, proof and principal bands the single one (20px) */
+  .daa-hero .container, .daa-grid { padding-left: var(--gutter); padding-right: var(--gutter); }
+  .daa-rule { padding: 0 var(--gutter); }
+}

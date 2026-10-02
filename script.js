@@ -86,7 +86,7 @@
         else el.classList.add("in");
         io.unobserve(el);
       });
-    }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0, rootMargin: "0px 0px -10% 0px" });   /* reveal when the top edge clears the bottom 10% of the screen; a ratio threshold left tall grids blank on phones */
 
     plainReveals.forEach(function (el) { io.observe(el); });
     lineGroups.forEach(function (parent) {
@@ -291,5 +291,27 @@
       btn.textContent = expanded ? "Show less" : "See more";
     });
   });
+
+  /* ---------------- Footer logo: same height as the footer text block ----------------
+     On the side-by-side layout the square logo is sized to the text column, from the
+     footer links ("Home") down to the email line. On the stacked phone layout
+     (max-width: 960px) the CSS size applies instead. */
+  var footInner = document.querySelector(".footer-inner");
+  var footText = document.querySelector(".footer-text");
+  var footLogo = document.querySelector(".footer-logo-img");
+  if (footInner && footText && footLogo) {
+    var syncFooterLogo = function () {
+      if (getComputedStyle(footInner).flexDirection === "column") {
+        footLogo.style.height = ""; footLogo.style.width = "";
+        return;
+      }
+      var h = Math.round(footText.getBoundingClientRect().height);
+      if (h > 0) { footLogo.style.height = h + "px"; footLogo.style.width = h + "px"; }
+    };
+    syncFooterLogo();
+    if ("ResizeObserver" in window) { new ResizeObserver(syncFooterLogo).observe(footText); }
+    else { window.addEventListener("resize", syncFooterLogo); }
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(syncFooterLogo); }
+  }
 
 })();
