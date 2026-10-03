@@ -2043,3 +2043,23 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
   .daa-hero .container, .daa-grid { padding-left: var(--gutter); padding-right: var(--gutter); }
   .daa-rule { padding: 0 var(--gutter); }
 }
+
+/* =====================================================================
+   V59 layout, October 2026
+   ===================================================================== */
+/* Regulated page: two engagement cards side by side on desktop and tablet.
+   The old 560px tracks plus the gap overflowed the container, so auto-fit fell back to one column. */
+.offer-grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* Service pages: Engagements, the 2025 band and the principal strip take the hero and matrix inset (2 x gutter) */
+#engagements.offers .container,
+.proof-band .container,
+.principal-strip .container { max-width: none; padding-left: calc(var(--gutter) * 2); padding-right: calc(var(--gutter) * 2); }
+@media (max-width: 640px) {
+  .offer-grid--two { grid-template-columns: 1fr; }   /* phones: stack */
+  #engagements.offers .container,
+  .proof-band .container,
+  .principal-strip .container { padding-left: var(--gutter); padding-right: var(--gutter); }
+}
+
+/* Allocator page, fractional retainer card: fee-credit line under the facts row */
+.offer-credit { margin: 0; font-family: var(--f-sans); font-size: 0.9rem; line-height: 1.55; color: #2E3047; }
